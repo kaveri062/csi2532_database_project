@@ -1,0 +1,466 @@
+CREATE TABLE hotel_chains (
+    chain_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    headquarters_address VARCHAR(255),
+    contact_email VARCHAR(255),
+    contact_phone VARCHAR(255),
+    number_of_hotels INT
+);
+
+-- Table for hotels
+CREATE TABLE hotels (
+    hotel_id SERIAL PRIMARY KEY,
+    chain_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(255),
+    rating INT,
+    FOREIGN KEY (chain_id) REFERENCES hotel_chains (chain_id)
+);
+
+-- Table for rooms
+CREATE TABLE rooms (
+    room_id SERIAL PRIMARY KEY,
+    hotel_id INT NOT NULL,
+    type VARCHAR(50),
+    price DECIMAL(10, 2),
+    amenities TEXT,
+    capacity INT,
+    sea_view BOOLEAN,
+    extendable BOOLEAN,
+    issues TEXT,
+    FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id)
+);
+
+-- Table for clients
+CREATE TABLE clients (
+    ssn VARCHAR(11) PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    registration_date DATE
+);
+
+
+-- Table for employees
+CREATE TABLE employees (
+    ssn VARCHAR(11) PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    role VARCHAR(100),
+    hotel_id INT NOT NULL,
+    FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id)
+);
+
+CREATE TABLE reservations (
+    reservation_id SERIAL PRIMARY KEY,
+    client_id VARCHAR(11) NOT NULL,
+    hotel_id INT NOT NULL,
+    room_id INT NOT NULL,
+    check_in DATE NOT NULL,
+    check_out DATE NOT NULL,
+    status VARCHAR(50), -- For example: 'Confirmed', 'Cancelled', 'Checked-In', 'Checked-Out'
+    FOREIGN KEY (client_id) REFERENCES clients (ssn),
+    FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id), 
+    FOREIGN KEY (room_id) REFERENCES rooms (room_id)
+);
+
+INSERT INTO hotel_chains (name, headquarters_address, contact_email, contact_phone, number_of_hotels) VALUES
+('North Star Lodgings', '100 Mountain Rd, Denver, CO', 'contact@northstarlodgings.com', '1800500500', 8),
+('Maple Leaf Resorts', '2020 Maple Rd, Vancouver, BC', 'info@mapleleafresorts.com', '1800600600', 8),
+('Urban Getaway Hotels', '400 City Center Blvd, New York, NY', 'stay@urbangetawayhotels.com', '1800700700', 8),
+('Cascadia Boutique Retreats', '870 Pine St, Seattle, WA', 'hello@cascadiaretreats.com', '1800800800', 8),
+('Lakeside Leisure Resorts', '55 Waterfront Ave, Orlando, FL', 'contact@lakesideleisure.com', '1800900900', 8);
+
+INSERT INTO hotels (chain_id, name, address, email, phone, rating) VALUES
+(1, 'North Star Seaside Resort', '2500 Boardwalk, Atlantic City, NJ', 'seaside@northstarlodgings.com', '1800500501', 5),
+(1, 'North Star Mountain Escape', '750 Peakview Blvd, Boulder, CO', 'mountainescape@northstarlodgings.com', '1800500502', 4),
+(1, 'North Star Urban Retreat', '500 City Plaza, Denver, CO', 'urban@northstarlodgings.com', '1800500503', 3),
+(1, 'North Star Lakeside Lodge', '322 Lake Shore, Tahoe City, CA', 'lakeside@northstarlodgings.com', '1800500504', 4),
+(1, 'North Star Desert Oasis', '1000 Dunes Rd, Las Vegas, NV', 'desert@northstarlodgings.com', '1800500505', 3),
+(1, 'North Star Riverside Inn', '400 River Rd, Portland, OR', 'riverside@northstarlodgings.com', '1800500506', 4),
+(1, 'North Star Downtown Hotel', '220 Market St, San Francisco, CA', 'downtown@northstarlodgings.com', '1800500507', 4),
+(1, 'North Star Grand Resort', '1 Grand Avenue, Miami Beach, FL', 'grand@northstarlodgings.com', '1800500508', 5);
+
+-- Maple Leaf Resorts hotels
+INSERT INTO hotels (chain_id, name, address, email, phone, rating) VALUES
+(2, 'Maple Leaf City Center', '100 Downtown St, Toronto, ON', 'citycenter@mapleleafresorts.com', '1800600601', 4),
+(2, 'Maple Leaf Country Inn', '55 Country Rd, Quebec City, QC', 'countryinn@mapleleafresorts.com', '1800600602', 3),
+(2, 'Maple Leaf Seaside', '200 Ocean Ave, Halifax, NS', 'seaside@mapleleafresorts.com', '1800600603', 5),
+(2, 'Maple Leaf Alpine Lodge', '750 Mountain Way, Whistler, BC', 'alpine@mapleleafresorts.com', '1800600604', 4),
+(2, 'Maple Leaf Riverside Retreat', '300 River Rd, Calgary, AB', 'riverside@mapleleafresorts.com', '1800600605', 3),
+(2, 'Maple Leaf Historic Downtown', '400 Old City Rd, Montreal, QC', 'downtown@mapleleafresorts.com', '1800600606', 4),
+(2, 'Maple Leaf Coastal Haven', '500 Shoreline Dr, Victoria, BC', 'coastal@mapleleafresorts.com', '1800600607', 5),
+(2, 'Maple Leaf Northern Lights', '600 Aurora Ave, Yellowknife, NT', 'northernlights@mapleleafresorts.com', '1800600608', 4);
+
+
+-- Urban Getaway Hotels
+INSERT INTO hotels (chain_id, name, address, email, phone, rating) VALUES
+(3, 'Urban Getaway Central', '500 Central Park, New York, NY', 'central@urbangetawayhotels.com', '1800700701', 5),
+(3, 'Urban Getaway Skyline', '250 Sky St, Chicago, IL', 'skyline@urbangetawayhotels.com', '1800700702', 4),
+(3, 'Urban Getaway Harbor', '400 Harbor Blvd, San Francisco, CA', 'harbor@urbangetawayhotels.com', '1800700703', 4),
+(3, 'Urban Getaway Sunset', '100 Sunset Blvd, Los Angeles, CA', 'sunset@urbangetawayhotels.com', '1800700704', 3),
+(3, 'Urban Getaway Beachside', '250 Ocean Drive, Miami, FL', 'beachside@urbangetawayhotels.com', '1800700705', 5),
+(3, 'Urban Getaway Capital View', '350 Capitol St, Washington, DC', 'capital@urbangetawayhotels.com', '1800700706', 4),
+(3, 'Urban Getaway Riverwalk', '450 River St, San Antonio, TX', 'riverwalk@urbangetawayhotels.com', '1800700707', 3),
+(3, 'Urban Getaway Garden District', '550 Garden Rd, New Orleans, LA', 'garden@urbangetawayhotels.com', '1800700708', 4);
+
+
+-- Cascadia Boutique Retreats
+INSERT INTO hotels (chain_id, name, address, email, phone, rating) VALUES
+(4, 'Cascadia Forest Hideaway', '123 Pine Tree Lane, Seattle, WA', 'forest@casacadiaboutique.com', '1800800801', 4),
+(4, 'Cascadia Urban Oasis', '456 City Center Ave, Portland, OR', 'urban@casacadiaboutique.com', '1800800802', 4),
+(4, 'Cascadia Mountain Retreat', '789 Peak View Rd, Boulder, CO', 'mountain@casacadiaboutique.com', '1800800803', 5),
+(4, 'Cascadia Lakeside Lodge', '234 Lakeview Rd, Coeur, ID', 'lakeside@casacadiaboutique.com', '1800800804', 4),
+(4, 'Cascadia Desert Oasis', '567 Desert Ave, Phoenix, AZ', 'desert@casacadiaboutique.com', '1800800805', 3),
+(4, 'Cascadia Vineyard Villa', '678 Wine Country Rd, Napa Valley, CA', 'vineyard@casacadiaboutique.com', '1800800806', 5),
+(4, 'Cascadia Coastal Cottage', '789 Ocean Blvd, Cannon Beach, OR', 'coastal@casacadiaboutique.com', '1800800807', 4);
+
+
+-- Lakeside Leisure Resorts
+INSERT INTO hotels (chain_id, name, address, email, phone, rating) VALUES
+(5, 'Lakeside Leisure Parkview', '321 Parkside Dr, Orlando, FL', 'parkview@lakesideleisure.com', '1800900901', 4),
+(5, 'Lakeside Leisure Beachfront', '654 Ocean Rd, Miami Beach, FL', 'beachfront@lakesideleisure.com', '1800900902', 5),
+(5, 'Lakeside Leisure Tranquil Waters', '987 Lake Rd, Tahoe City, CA', 'tranquil@lakesideleisure.com', '1800900903', 4),
+(5, 'Lakeside Leisure Mountain View', '1010 Mountain Rd, Asheville, NC', 'mountainview@lakesideleisure.com', '1800900904', 4),
+(5, 'Lakeside Leisure Grand Resort', '1111 Grand Ave, Las Vegas, NV', 'grand@lakesideleisure.com', '1800900905', 5),
+(5, 'Lakeside Leisure Country Club', '1212 Country Club Ln, Savannah, GA', 'countryclub@lakesideleisure.com', '1800900906', 3),
+(5, 'Lakeside Leisure Urban Escape', '1313 City Escape Rd, Chicago, IL', 'urbanescape@lakesideleisure.com', '1800900907', 4);
+
+-- Inserting rooms for North Star Lodgings (Assuming chain_id 1 and starting hotel_id as 1)
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(1, 'Oceanfront Suite', 500.00, 'King Bed, Ocean View, Hot Tub, Complimentary Breakfast', 2, TRUE, TRUE, NULL),
+(1, 'Deluxe Room', 300.00, 'Queen Bed, Partial Ocean View, Free WiFi', 2, TRUE, FALSE, NULL),
+(1, 'Standard Room', 200.00, 'Two Twin Beds, City View, Free WiFi', 2, FALSE, FALSE, 'Minor wear and tear'),
+(1, 'Family Suite', 600.00, 'Two Queen Beds, Ocean View, Large Living Area', 4, TRUE, TRUE, NULL),
+(1, 'Economy Double', 150.00, 'Two Double Beds, Free WiFi, Air Conditioning', 4, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(2, 'Mountain View Suite', 550.00, 'King Bed, Mountain View, Fireplace, Complimentary Ski Passes', 2, FALSE, TRUE, NULL),
+(2, 'Standard Room', 200.00, 'Two Twin Beds, Mountain View, Free WiFi', 2, FALSE, FALSE, NULL),
+(2, 'Family Suite', 700.00, 'Two Queen Beds, Living Area, Mountain View', 4, FALSE, TRUE, 'Minor cosmetic damage'),
+(2, 'Deluxe Room', 350.00, 'Queen Bed, Balcony, Mountain View, Free WiFi', 2, FALSE, FALSE, NULL),
+(2, 'Economy Double', 180.00, 'Two Double Beds, Interior View, Free WiFi', 4, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(3, 'Executive Suite', 650.00, 'King Bed, City View, Private Lounge, Complimentary Breakfast', 2, FALSE, TRUE, NULL),
+(3, 'Urban Single', 250.00, 'Single Bed, City View, Free WiFi', 1, FALSE, FALSE, NULL),
+(3, 'Deluxe Double', 400.00, 'Two Double Beds, City View, Minibar', 4, FALSE, TRUE, NULL),
+(3, 'Standard Room', 300.00, 'Queen Bed, Free WiFi, City View', 2, FALSE, FALSE, 'A/C unit noisy'),
+(3, 'Penthouse', 1000.00, 'King Bed, Panoramic City View, Private Balcony, Butler Service', 2, FALSE, TRUE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(4, 'Forest Retreat Suite', 600.00, 'King Bed, Forest View, Fireplace, Hot Tub', 2, FALSE, TRUE, NULL),
+(4, 'Cabin Double', 220.00, 'Two Double Beds, Woodland Surroundings, Free WiFi', 4, FALSE, FALSE, NULL),
+(4, 'Deluxe Lodge', 450.00, 'Queen Bed, Private Balcony, Forest View', 2, FALSE, FALSE, NULL),
+(4, 'Standard Room', 180.00, 'Twin Bed, Garden View, Free WiFi', 1, FALSE, FALSE, 'Minor repairs needed'),
+(4, 'Family Cabin', 800.00, 'Three Queen Beds, Large Living Area, Forest View', 6, FALSE, TRUE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(5, 'Lakeside Suite', 550.00, 'King Bed, Lake View, Balcony, Complimentary Breakfast', 2, TRUE, TRUE, NULL),
+(5, 'Standard Room', 250.00, 'Two Twin Beds, Garden View, Free WiFi', 2, FALSE, FALSE, NULL),
+(5, 'Family Room', 650.00, 'Two Queen Beds, Lake View, Living Area', 4, TRUE, TRUE, 'Some furniture wear'),
+(5, 'Deluxe Room', 400.00, 'Queen Bed, Lake View, Minibar', 2, TRUE, FALSE, NULL),
+(5, 'Economy Quad', 200.00, 'Four Twin Beds, Interior View, Free WiFi', 4, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(6, 'Beachfront Deluxe', 600.00, 'King Bed, Direct Beach Access, Private Balcony', 2, TRUE, TRUE, NULL),
+(6, 'Coastal Suite', 700.00, 'Queen Bed, Ocean View, Hot Tub, Complimentary Breakfast', 2, TRUE, TRUE, NULL),
+(6, 'Standard Room', 300.00, 'Two Double Beds, Partial Ocean View, Free WiFi', 4, FALSE, FALSE, NULL),
+(6, 'Family Room', 750.00, 'Two Queen Beds, Bunk Beds, Ocean View, Large Living Area', 6, TRUE, TRUE, 'Minor wear and tear'),
+(6, 'Economy Room', 200.00, 'Twin Beds, Interior View, Free WiFi', 2, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(7, 'Tranquil Suite', 650.00, 'King Bed, Lake View, Private Balcony, Spa Bath', 2, TRUE, TRUE, NULL),
+(7, 'Lakeview Double', 400.00, 'Two Double Beds, Balcony, Lake View', 4, TRUE, FALSE, NULL),
+(7, 'Standard Twin', 250.00, 'Twin Beds, Garden View, Free WiFi', 2, FALSE, FALSE, 'Needs repainting'),
+(7, 'Family Lakeside', 800.00, 'Queen Bed, Two Twin Beds, Lake View, Large Patio', 4, TRUE, TRUE, NULL),
+(7, 'Economy Quad', 300.00, 'Four Twin Beds, Interior View, Free WiFi', 4, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(8, 'Central Suite', 650.00, 'King Bed, City View, Executive Lounge Access', 2, FALSE, TRUE, NULL),
+(8, 'Deluxe King', 500.00, 'King Bed, City View, Free WiFi, Minibar', 2, FALSE, FALSE, NULL),
+(8, 'Standard Queen', 350.00, 'Queen Bed, City View, Free WiFi', 2, FALSE, FALSE, 'Slight noise from street'),
+(8, 'Family City Suite', 800.00, 'Two Queen Beds, Living Area, City View', 4, FALSE, TRUE, NULL),
+(8, 'Economy Double', 200.00, 'Double Bed, Interior View, Free WiFi', 2, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(9, 'Skyline View Suite', 700.00, 'King Bed, Panoramic City View, Jacuzzi', 2, FALSE, TRUE, NULL),
+(9, 'Deluxe Twin', 450.00, 'Twin Beds, City View, Free WiFi', 2, FALSE, FALSE, NULL),
+(9, 'Urban Family Suite', 850.00, 'Queen Bed, Two Twin Beds, City View, Spacious Living Room', 4, FALSE, TRUE, 'Minor maintenance needed'),
+(9, 'Economy Single', 180.00, 'Single Bed, Interior View, Free WiFi', 1, FALSE, FALSE, NULL),
+(9, 'Standard Room', 300.00, 'Queen Bed, City View, Free WiFi', 2, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(10, 'Harbor Deluxe', 600.00, 'King Bed, Harbor View, Private Balcony', 2, TRUE, TRUE, NULL),
+(10, 'Sea Breeze Suite', 800.00, 'King Bed, Panoramic Sea View, Butler Service', 2, TRUE, TRUE, NULL),
+(10, 'Standard Harbor Room', 400.00, 'Queen Bed, Harbor View, Free WiFi', 2, TRUE, FALSE, 'AC unit needs servicing'),
+(10, 'Economy Twin', 250.00, 'Twin Beds, City View, Free WiFi', 2, FALSE, FALSE, NULL),
+(10, 'Family Room', 700.00, 'Two Double Beds, Harbor View, Free Breakfast', 4, TRUE, TRUE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(11, 'Forest Suite', 550.00, 'King Bed, Forest View, Private Balcony', 2, FALSE, TRUE, NULL),
+(11, 'Deluxe Forest Room', 400.00, 'Queen Bed, Forest View, Free WiFi', 2, FALSE, FALSE, NULL),
+(11, 'Standard Room', 300.00, 'Double Bed, Garden View, Free WiFi', 2, FALSE, FALSE, 'Minor refurbishing needed'),
+(11, 'Family Cabin', 650.00, 'Two Queen Beds, Bunk Beds, Kitchenette, Forest View', 6, FALSE, TRUE, NULL),
+(11, 'Explorer Bunk Room', 200.00, 'Bunk Beds, Shared Bathroom, Free WiFi', 4, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(12, 'Urban Suite', 500.00, 'King Bed, City View, Executive Lounge Access', 2, FALSE, TRUE, NULL),
+(12, 'City View Deluxe', 450.00, 'Queen Bed, Panoramic City View, Free WiFi', 2, FALSE, FALSE, NULL),
+(12, 'Cozy Corner Room', 350.00, 'Double Bed, City View, Compact Size', 2, FALSE, FALSE, 'Needs new curtains'),
+(12, 'Family Urban Room', 600.00, 'Two Double Beds, Sofa Bed, City View', 5, FALSE, TRUE, NULL),
+(12, 'Single Studio', 250.00, 'Single Bed, Kitchenette, Urban View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(13, 'Mountain Suite', 600.00, 'King Bed, Mountain View, Fireplace', 2, FALSE, TRUE, NULL),
+(13, 'Elevated Deluxe', 500.00, 'Queen Bed, High Elevation Mountain View', 2, FALSE, FALSE, NULL),
+(13, 'Standard Lodge Room', 400.00, 'Two Twin Beds, Lodge View', 2, FALSE, FALSE, 'Updating decor'),
+(13, 'Family Mountain Home', 700.00, 'Three Queen Beds, Living Area, Mountain View', 6, FALSE, TRUE, NULL),
+(13, 'Adventurers Bunk', 250.00, 'Bunk Beds, Shared Facilities', 4, FALSE, FALSE, NULL);
+
+ INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(14, 'Parkview Suite', 450.00, 'King Bed, Park View, Balcony', 2, FALSE, TRUE, NULL),
+(14, 'Deluxe Park Room', 350.00, 'Queen Bed, Beautiful Park View, Free WiFi', 2, FALSE, FALSE, NULL),
+(14, 'Standard Room', 250.00, 'Double Bed, Garden View, Free WiFi', 2, FALSE, FALSE, 'A/C maintenance required'),
+(14, 'Family Room with Park View', 550.00, 'Two Double Beds, Extra Single Bed, Park View', 5, FALSE, TRUE, NULL),
+(14, 'Economy Twin Room', 200.00, 'Twin Beds, Interior View, Free WiFi', 2, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(15, 'Beachfront Exclusive', 650.00, 'King Bed, Direct Beach Access, Private Terrace', 2, TRUE, TRUE, NULL),
+(15, 'Sea View Deluxe', 500.00, 'Queen Bed, Sea View, Balcony', 2, TRUE, FALSE, NULL),
+(15, 'Coastal Standard Room', 350.00, 'Double Bed, Coastal View, Free WiFi', 2, TRUE, FALSE, 'Window lock repair'),
+(15, 'Family Beach Suite', 700.00, 'Two Queen Beds, Bunk Bed, Beach View', 6, TRUE, TRUE, NULL),
+(15, 'Surfers Single', 250.00, 'Single Bed, Easy Beach Access, Storage for Surfboard', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(16, 'Tranquil Suite', 550.00, 'King Bed, Lake View, Balcony', 2, TRUE, TRUE, NULL),
+(16, 'Deluxe Lake Room', 400.00, 'Queen Bed, Direct Lake Access', 2, TRUE, FALSE, NULL),
+(16, 'Standard Lake View', 300.00, 'Two Twin Beds, Lake View', 2, TRUE, FALSE, 'Repainting needed'),
+(16, 'Family Lake House', 650.00, 'Two Queen Beds, Living Room, Lake View', 4, TRUE, TRUE, NULL),
+(16, 'Lakeview Single', 200.00, 'Single Bed, Lake View, Free WiFi', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(17, 'Central Executive Suite', 700.00, 'King Bed, City View, Lounge Access', 2, FALSE, TRUE, NULL),
+(17, 'Urban Deluxe Room', 500.00, 'Queen Bed, High Floor City View', 2, FALSE, FALSE, NULL),
+(17, 'Compact Urban Single', 300.00, 'Single Bed, Compact Size, City View', 1, FALSE, FALSE, 'Minor wear and tear'),
+(17, 'Family City View Suite', 600.00, 'Two Double Beds, Sofa Bed, City View', 5, FALSE, TRUE, NULL),
+(17, 'Standard Twin Room', 350.00, 'Twin Beds, City View, Free WiFi', 2, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(18, 'Skyline Master Suite', 750.00, 'King Bed, Panoramic City View, Private Balcony', 2, FALSE, TRUE, NULL),
+(18, 'High-rise Deluxe', 550.00, 'Queen Bed, Skyline View, Balcony', 2, FALSE, FALSE, NULL),
+(18, 'Urban Standard', 400.00, 'Double Bed, Urban View, Free WiFi', 2, FALSE, FALSE, 'Update furniture'),
+(18, 'Skyline Family Room', 700.00, 'Two Queen Beds, City View, Extra Space', 4, FALSE, TRUE, NULL),
+(18, 'Economy Urban Single', 250.00, 'Single Bed, Efficient Space, City View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(19, 'Harbor View Suite', 600.00, 'King Bed, Harbor View, Balcony', 2, TRUE, TRUE, NULL),
+(19, 'Deluxe Harbor Room', 450.00, 'Queen Bed, Direct Harbor View', 2, TRUE, FALSE, NULL),
+(19, 'Standard Harbor', 350.00, 'Double Bed, Harbor View, Free WiFi', 2, TRUE, FALSE, 'Carpet replacement'),
+(19, 'Harbor Family Suite', 650.00, 'Two Double Beds, Harbor View, Living Area', 4, TRUE, TRUE, NULL),
+(19, 'Single Dockside', 300.00, 'Single Bed, Dockside View, Free WiFi', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(20, 'Sunset Penthouse', 800.00, 'King Bed, Sunset View, Private Terrace', 2, FALSE, TRUE, NULL),
+(20, 'Deluxe Sunset View', 550.00, 'Queen Bed, Sunset and City View', 2, FALSE, FALSE, NULL),
+(20, 'Standard Sunset Room', 400.00, 'Double Bed, City and Sunset View', 2, FALSE, FALSE, 'Blinds to be fixed'),
+(20, 'Family Sunset Apartment', 750.00, 'Two Queen Beds, Living Room, Sunset View', 4, FALSE, TRUE, NULL),
+(20, 'Economic Single', 250.00, 'Single Bed, Compact, City View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(21, 'Forest Master Suite', 550.00, 'King Bed, Forest View, Private Balcony', 2, FALSE, TRUE, NULL),
+(21, 'Deluxe Forest Room', 450.00, 'Queen Bed, Forest View', 2, FALSE, FALSE, NULL),
+(21, 'Standard Forest', 350.00, 'Double Bed, Forest View, Free WiFi', 2, FALSE, FALSE, 'Air conditioner maintenance'),
+(21, 'Forest Family Suite', 650.00, 'Two Double Beds, Forest View, Spacious', 4, FALSE, TRUE, NULL),
+(21, 'Single Forest Retreat', 300.00, 'Single Bed, Intimate Forest View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(22, 'Urban Oasis Suite', 600.00, 'King Bed, City View, Rooftop Access', 2, FALSE, TRUE, NULL),
+(22, 'Deluxe City Room', 500.00, 'Queen Bed, Vibrant City View', 2, FALSE, FALSE, NULL),
+(22, 'Urban Standard', 400.00, 'Double Bed, City View, Free WiFi', 2, FALSE, FALSE, 'Needs new curtains'),
+(22, 'Oasis Family Suite', 700.00, 'Two Queen Beds, City View, Extra Space', 4, FALSE, TRUE, NULL),
+(22, 'Compact Urban Single', 350.00, 'Single Bed, Efficient Space, City View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(23, 'Mountain View Suite', 650.00, 'King Bed, Panoramic Mountain View, Balcony', 2, FALSE, TRUE, NULL),
+(23, 'Deluxe Mountain Room', 550.00, 'Queen Bed, Mountain View', 2, FALSE, FALSE, NULL),
+(23, 'Standard Mountain', 450.00, 'Double Bed, Mountain View, Free WiFi', 2, FALSE, FALSE, 'Update bedding'),
+(23, 'Mountain Family Suite', 750.00, 'Two Double Beds, Mountain View, Living Room', 4, FALSE, TRUE, NULL),
+(23, 'Single Mountain Lodge', 400.00, 'Single Bed, Cozy Mountain View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(24, 'Parkview Executive Suite', 600.00, 'King Bed, Park View, Balcony', 2, FALSE, TRUE, NULL),
+(24, 'Deluxe Park Room', 500.00, 'Queen Bed, Beautiful Park View', 2, FALSE, FALSE, NULL),
+(24, 'Standard Park', 400.00, 'Double Bed, Park View, Free WiFi', 2, FALSE, FALSE, 'Minor wear and tear'),
+(24, 'Park Family Suite', 700.00, 'Two Queen Beds, Park View, Spacious', 4, FALSE, TRUE, NULL),
+(24, 'Single Park Retreat', 350.00, 'Single Bed, Park View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(25, 'Beachfront Luxury Suite', 800.00, 'King Bed, Direct Beach Access, Private Terrace', 2, TRUE, TRUE, NULL),
+(25, 'Deluxe Beach Room', 650.00, 'Queen Bed, Ocean View', 2, TRUE, FALSE, NULL),
+(25, 'Standard Beach', 550.00, 'Double Bed, Ocean View, Free WiFi', 2, TRUE, FALSE, 'Needs repainting'),
+(25, 'Beach Family Suite', 900.00, 'Two Queen Beds, Ocean View, Large Living Area', 4, TRUE, TRUE, NULL),
+(25, 'Single Beach Cabana', 500.00, 'Single Bed, Beach View, Easy Beach Access', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(26, 'Tranquil Waters Suite', 700.00, 'King Bed, Direct Lake Access, Private Balcony', 2, TRUE, TRUE, NULL),
+(26, 'Deluxe Lakeside Room', 600.00, 'Queen Bed, Lake View', 2, TRUE, FALSE, NULL),
+(26, 'Standard Lake View', 500.00, 'Double Bed, Lake View, Free WiFi', 2, TRUE, FALSE, NULL),
+(26, 'Lakeside Family Suite', 800.00, 'Two Queen Beds, Lake View, Spacious', 4, TRUE, TRUE, NULL),
+(26, 'Single Lakefront Cabin', 450.00, 'Single Bed, Lakefront, Dock Access', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(27, 'Parkside Grand Suite', 650.00, 'King Bed, Park Views, Balcony', 2, FALSE, TRUE, NULL),
+(27, 'Deluxe Parkview Room', 550.00, 'Queen Bed, Park View', 2, FALSE, FALSE, NULL),
+(27, 'Standard Parkside', 450.00, 'Double Bed, Park View, Free WiFi', 2, FALSE, FALSE, NULL),
+(27, 'Parkside Family Room', 750.00, 'Two Double Beds, Park View, Extra Space', 4, FALSE, TRUE, NULL),
+(27, 'Cozy Parkside Single', 400.00, 'Single Bed, Park View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(28, 'Riverside Luxury Suite', 750.00, 'King Bed, Riverside View, Private Balcony', 2, FALSE, TRUE, NULL),
+(28, 'Deluxe Riverside Room', 650.00, 'Queen Bed, River View', 2, FALSE, FALSE, NULL),
+(28, 'Standard Riverside', 550.00, 'Double Bed, River View, Free WiFi', 2, FALSE, FALSE, NULL),
+(28, 'Riverside Family Suite', 850.00, 'Two Queen Beds, River View, Large Living Area', 4, FALSE, TRUE, NULL),
+(28, 'Single Riverside Retreat', 500.00, 'Single Bed, Riverside View, Patio Access', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(29, 'Metropolitan Executive Suite', 800.00, 'King Bed, Cityscape View, Executive Lounge Access', 2, FALSE, TRUE, NULL),
+(29, 'Deluxe Metropolitan Room', 700.00, 'Queen Bed, High-floor City View', 2, FALSE, FALSE, NULL),
+(29, 'Standard Metropolitan', 600.00, 'Double Bed, City View, Free WiFi', 2, FALSE, FALSE, NULL),
+(29, 'Metropolitan Family Suite', 900.00, 'Two Double Beds, City View, Spacious', 4, FALSE, TRUE, NULL),
+(29, 'Metropolitan Single', 550.00, 'Single Bed, City View, Efficient Space', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(30, 'Coastal View Suite', 700.00, 'King Bed, Ocean View, Balcony', 2, TRUE, TRUE, NULL),
+(30, 'Deluxe Coastal Room', 600.00, 'Queen Bed, Ocean View', 2, TRUE, FALSE, NULL),
+(30, 'Standard Coastal View', 500.00, 'Double Bed, Ocean View, Free WiFi', 2, TRUE, FALSE, NULL),
+(30, 'Family Coastal Suite', 800.00, 'Two Queen Beds, Ocean View, Spacious', 4, TRUE, TRUE, NULL),
+(30, 'Coastal Single Retreat', 450.00, 'Single Bed, Ocean View, Patio Access', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(31, 'Executive Suite', 750, 'King Bed, City View, Executive Lounge Access', 2, FALSE, TRUE, NULL),
+(31, 'Deluxe City Room', 600, 'Queen Bed, Downtown View', 2, FALSE, FALSE, NULL),
+(31, 'Standard Room', 450, 'Two Twin Beds, Free WiFi', 2, FALSE, FALSE, NULL),
+(31, 'City View Family Suite', 850, 'Two Queen Beds, City View, Spacious Living Area', 4, FALSE, TRUE, NULL),
+(31, 'Single Downtown', 400, 'Single Bed, Compact, Downtown View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(32, 'Waterfront Suite', 800, 'King Bed, Waterfront View, Balcony', 2, TRUE, TRUE, NULL),
+(32, 'Deluxe Waterfront Room', 650, 'Queen Bed, Direct Lake Access', 2, TRUE, FALSE, NULL),
+(32, 'Standard Lakeside', 500, 'Double Bed, Lake View, Free WiFi', 2, TRUE, FALSE, NULL),
+(32, 'Family Lakeside Suite', 900, 'Two Double Beds, Lake View, Large Living Area', 4, TRUE, TRUE, NULL),
+(32, 'Single Lakeside Cabin', 450, 'Single Bed, Lakeside, Patio Access', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(33, 'Artistic Suite', 720, 'King Bed, Art District Views, Free Museum Tickets', 2, FALSE, TRUE, NULL),
+(33, 'Deluxe Art Room', 570, 'Queen Bed, Inspiring Views', 2, FALSE, FALSE, NULL),
+(33, 'Standard Creative', 520, 'Double Bed, Art Inspired Decor, Free WiFi', 2, FALSE, FALSE, NULL),
+(33, 'Art Lover Family Suite', 820, 'Two Queen Beds, Art Books Collection, Spacious', 4, FALSE, TRUE, NULL),
+(33, 'Single Artist Loft', 430, 'Single Bed, Loft Style, Art District View', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(34, 'Vineyard Suite', 780, 'King Bed, Vineyard Views, Wine Tasting Tours', 2, FALSE, TRUE, NULL),
+(34, 'Deluxe Vineyard Room', 630, 'Queen Bed, Private Balcony', 2, FALSE, FALSE, NULL),
+(34, 'Standard Winery', 480, 'Double Bed, Complimentary Wine, Free WiFi', 2, FALSE, FALSE, NULL),
+(34, 'Winery Family Suite', 880, 'Two Double Beds, Vineyard Tours Included, Spacious', 4, FALSE, TRUE, NULL),
+(34, 'Single Winery Cottage', 460, 'Single Bed, Cottage Style, Vineyard Access', 1, FALSE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(35, 'Island Resort Suite', 850, 'King Bed, Panoramic Sea View, Private Beach Access', 2, TRUE, TRUE, NULL),
+(35, 'Deluxe Island Room', 700, 'Queen Bed, Sea View', 2, TRUE, FALSE, NULL),
+(35, 'Standard Island', 550, 'Double Bed, Island View, Free WiFi', 2, TRUE, FALSE, NULL),
+(35, 'Island Family Bungalow', 950, 'Two Queen Beds, Beachfront, Large Patio', 4, TRUE, TRUE, NULL),
+(35, 'Single Island Hut', 500, 'Single Bed, Beach Access, Compact', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(36, 'Riverside Suite', 760, 'King Bed, Riverside View, Balcony', 2, TRUE, TRUE, NULL),
+(36, 'Deluxe Riverside', 610, 'Queen Bed, Riverside View, Free Canoeing Pass', 2, TRUE, FALSE, NULL),
+(36, 'Standard Riverside', 460, 'Double Bed, Riverside View, Free WiFi', 2, TRUE, FALSE, NULL),
+(36, 'Family Riverside Loft', 860, 'Two Double Beds, Spacious, Kitchenette', 4, TRUE, TRUE, NULL),
+(36, 'Single Riverside Pod', 410, 'Single Bed, Compact, Riverside View', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(37, 'Coastal View Suite', 790, 'King Bed, Ocean Front View, Private Deck', 2, TRUE, TRUE, NULL),
+(37, 'Deluxe Coastal Room', 640, 'Queen Bed, High Floor, Ocean View', 2, TRUE, FALSE, NULL),
+(37, 'Standard Coastal', 490, 'Double Bed, Ocean View, Free WiFi', 2, TRUE, FALSE, NULL),
+(37, 'Coastal Family Suite', 890, 'Two Queen Beds, Ocean View, Large Living Area', 4, TRUE, TRUE, NULL),
+(37, 'Single Coastal Cabin', 440, 'Single Bed, Access to Beach', 1, TRUE, FALSE, NULL);
+
+INSERT INTO rooms (hotel_id, type, price, amenities, capacity, sea_view, extendable, issues) VALUES
+(38, 'Mountain View Suite', 770, 'King Bed, Panoramic Mountain View, Private Terrace', 2, FALSE, TRUE, NULL),
+(38, 'Deluxe Mountain Room', 620, 'Queen Bed, Mountain View, Balcony', 2, FALSE, FALSE, NULL),
+(38, 'Standard Mountain', 470, 'Double Bed, Mountain View, Free WiFi', 2, FALSE, FALSE, NULL),
+(38, 'Mountain Family Suite', 870, 'Two Double Beds, Mountain View, Spacious', 4, FALSE, TRUE, NULL),
+(38, 'Single Mountain Lodge', 420, 'Single Bed, Lodge Style, Mountain Access', 1, FALSE, FALSE, NULL);
+
+ 
+
+INSERT INTO clients (full_name, address, ssn, registration_date, email, password) VALUES
+('John Doe', '123 Main St, Anytown, USA', '123-45-6789', '2023-01-01', 'john@example.com', 'johns_password'),
+('Jane Smith', '456 Elm St, Anycity, USA', '987-65-4321', '2023-01-02', 'jane@example.com', 'janes_password'),
+('Alice Johnson', '789 Maple Ave, Somewhere, USA', '555-55-5555', '2023-01-03', 'alice@example.com', 'alices_password');
+
+
+INSERT INTO reservations (client_id, hotel_id, room_id, check_in, check_out) VALUES
+('123-45-6789', 1, 1, '2023-06-15', '2023-06-20'),
+('987-65-4321', 1, 2, '2023-06-18', '2023-06-23'),
+('555-55-5555', 2, 5, '2023-07-01', '2023-07-05');
+
+INSERT INTO employees (full_name, address, ssn, role, hotel_id, email, password) VALUES
+('Emma Thompson', '100 Side St, Cityville, USA', '111-22-3333', 'Manager', 1, 'emma@example.com', 'emmas_password'),
+('Liam Brown', '200 Broad St, Townville, USA', '222-33-4444', 'Receptionist', 1, 'liam@example.com', 'liams_password'),
+('Olivia Green', '300 Oak St, Villageville, USA', '333-44-5555', 'Housekeeping', 2, 'olivia@example.com', 'olivias_password'),
+('Noah White', '400 Pine St, Hamletville, USA', '444-55-6666', 'Chef', 2, 'noah@example.com', 'noahs_password'),
+('Sophia Black', '500 Birch St, Metropolis, USA', '555-66-7777', 'Manager', 3, 'sophia@example.com', 'sophias_password'),
+('Mason Hill', '600 Cedar St, Smalltown, USA', '666-77-8888', 'Maintenance', 3, 'mason@example.com', 'masons_password'),
+('Isabella Scott', '700 Spruce St, Largecity, USA', '777-88-9999', 'Receptionist', 4, 'isabella@example.com', 'isabellas_password'),
+('Jacob Adams', '800 Redwood St, Capitalcity, USA', '888-99-0000', 'Manager', 5, 'jacob@example.com', 'jacobs_password'),
+('Mia Johnson', '900 Willow St, Coastcity, USA', '999-00-1111', 'Housekeeping', 6, 'mia@example.com', 'mias_password'),
+('Ethan Jones', '1000 Maple St, Rivertown, USA', '000-11-2222', 'Chef', 7, 'ethan@example.com', 'ethans_password');
+
+SELECT r.room_id, r.type, r.price
+FROM rooms r
+LEFT JOIN reservations res ON r.room_id = res.room_id
+WHERE r.hotel_id = 1 -- Assuming you're looking for rooms in hotel with ID 1
+AND (res.check_in NOT BETWEEN '2023-07-01' AND '2023-07-05')
+AND (res.check_out NOT BETWEEN '2023-07-01' AND '2023-07-05')
+OR res.reservation_id IS NULL;
+
+INSERT INTO clients (full_name, address, ssn, registration_date)
+VALUES ('Zeynep Sevincel', '1243 Maple Street', '123-45-9098', '2024-01-01');
+
+UPDATE reservations
+SET check_out = '2023-07-07'
+WHERE reservation_id = 1; 
+
+CREATE OR REPLACE FUNCTION archive_reservation()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO archived_reservations (reservation_id, client_id, room_id, check_in, check_out)
+  VALUES (OLD.reservation_id, OLD.client_id, OLD.room_id, OLD.check_in, OLD.check_out);
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER archive_before_delete
+BEFORE DELETE ON reservations
+FOR EACH ROW EXECUTE FUNCTION archive_reservation();
+
+CREATE OR REPLACE FUNCTION prevent_hotel_deletion()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM reservations WHERE hotel_id = OLD.hotel_id) THEN
+    RAISE EXCEPTION 'Cannot delete hotel with active reservations.';
+  END IF;
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_hotel_before_deletion
+BEFORE DELETE ON hotels
+FOR EACH ROW EXECUTE FUNCTION prevent_hotel_deletion();
