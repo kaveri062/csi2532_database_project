@@ -1,0 +1,124 @@
+/* General page styles */
+.hotel-chain-about-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Back to results and photos section */
+  .hotel-photos-section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Navigation tabs */
+  .hotel-tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .hotel-tabs button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .hotel-tabs button:focus {
+    outline: none;
+    border-bottom: 2px solid #007bff;
+  }
+  
+  /* Hotel chain information section */
+  .hotel-chain-info {
+    padding: 20px;
+  }
+  
+  .hotel-chain-info h1 {
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 10px;
+  }
+  
+  /* List of amenities */
+  .hotel-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+  }
+  
+  .hotel-amenities div {
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Star rating style */
+  .star-rating {
+    color: #e5a00d;
+  }
+  
+  /* Map and address section */
+  .hotel-map-section {
+    position: relative;
+    margin: 20px 0;
+  }
+  
+  /* Reserve a room button */
+  .reserve-room-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .reserve-room-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .reserve-room-button:active {
+    background-color: #00408b;
+  }
+  
+  /* Utility classes */
+  .text-center {
+    text-align: center;
+  }
+  
+  .mb-1 {
+    margin-bottom: 0.25rem;
+  }
+  
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mb-3 {
+    margin-bottom: 1rem;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .hotel-amenities div {
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+  
+    .reserve-room-button {
+      width: auto;
+      padding: 10px 20px;
+    }
+  }
+  

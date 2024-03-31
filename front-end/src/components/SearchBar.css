@@ -1,0 +1,77 @@
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f8f9fa; /* Soft background color */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 800px; /* Adjust based on your layout preference */
+  margin: 20px auto;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px; /* Adds some space between input groups */
+}
+
+.input-label {
+  font-size: 14px;
+  color: #6c757d; /* Dark gray for text */
+  margin-bottom: 5px;
+}
+
+.input-field, .input-select {
+  padding: 10px;
+  font-size: 14px;
+  border: 2px solid #ced4da; /* Light gray border */
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus, .input-select:focus {
+  border-color: #007bff; /* Highlight focus */
+}
+
+.rooms-guests-btn, .search-button {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff; /* Primary button color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.rooms-guests-btn:hover, .search-button:hover {
+  background-color: #0056b3; /* Darken button on hover */
+}
+
+.rooms-guests-btn {
+  background-color: #28a745; /* Secondary button color */
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  .rooms-guests-btn, .search-button {
+    width: 100%;
+    margin-top: 10px; /* Add space between buttons and input fields on small screens */
+  }
+}

@@ -1,0 +1,45 @@
+/* HotelCard.css */
+.luxury-hotels-showcase {
+    text-align: center;
+    padding: 5rem;
+    background: #f8f8f8; /* Adjust the background as needed */
+  }
+  
+  .hotel-cards-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem; /* Provide space between cards */
+  }
+  
+  .hotel-card {
+    width: 300px; /* Fixed width or use percentages */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hotel-card:hover {
+    transform: translateY(-10px); /* Slight lift effect on hover */
+  }
+  
+  .hotel-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .hotel-info {
+    padding: 1rem;
+    background: white; /* Background for the text info */
+  }
+  
+  .hotel-info h3,
+  .hotel-info .hotel-location,
+  .hotel-info .hotel-price,
+  .hotel-info .hotel-stars {
+    margin: 0.5rem 0;
+  }
+  
+
+  

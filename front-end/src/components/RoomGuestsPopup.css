@@ -1,0 +1,161 @@
+/* RoomGuestsPopup.css */
+.room-guests-popup-overlay {
+    position: fixed; /* Overlay takes the entire screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center; /* Center the popup horizontally */
+    align-items: center; /* Center the popup vertically */
+    z-index: 1000; /* Ensures it is on top of all other content */
+  }
+  
+  .room-guests-popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners for the popup */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lifted" effect */
+    width: 90%; /* Takes up a majority of the screen width */
+    max-width: 450px; /* Maximum width to maintain readability */
+    z-index: 1001; /* Above the overlay background */
+  }
+  
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .close-button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .room-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .room-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .room-title {
+    font-weight: bold;
+  }
+  
+  .remove-room-button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .guests-count {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .count-control {
+    display: flex;
+    align-items: center;
+  }
+  
+  .count-control label {
+    margin-right: 5px;
+  }
+  
+  .count-control button {
+    background: #eaeaea;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .count-control span {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+  }
+  
+  .add-room-button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .popup-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .cancel-button,
+  .done-button {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    flex-basis: 48%;
+  }
+  
+  .cancel-button {
+    background: #f5f5f5;
+  }
+  
+  .done-button {
+    background: #007bff;
+    color: white;
+  }
+  
+  /* Ensuring the popup is always centered and responsive */
+  @media (max-width: 768px) {
+    .room-guests-popup {
+      width: 90%;
+      box-sizing: border-box; /* Prevents padding from expanding the box */
+    }
+  
+    .room-info,
+    .guests-count,
+    .popup-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .remove-room-button {
+      margin-top: 10px; /* Add space between the title and button on smaller screens */
+    }
+  
+    .count-control {
+      justify-content: center; /* Center the count control items */
+    }
+  
+    .cancel-button,
+    .done-button {
+      width: 100%; /* Full-width buttons on smaller screens */
+      margin: 10px 0; /* Add some margin top and bottom */
+    }
+  
+    .add-room-button {
+      width: 100%; /* Full-width button */
+    }
+  }
+  

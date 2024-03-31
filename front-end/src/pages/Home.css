@@ -1,0 +1,77 @@
+.home .parallax-section {
+  height: 50vh;
+  background-image: url('https://mbluxury1.s3.amazonaws.com/2022/11/17184850/Luxury-Hotel-Chains-1.jpg'); /* Replace with the path to your parallax background image */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home .search-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.home .search-box input,
+.home .search-box button {
+  margin: 5px;
+}
+
+.home .luxury-hotels-showcase {
+  padding: 20px;
+  text-align: center;
+}
+
+.home .luxury-hotels-showcase h2 {
+  margin-bottom: 20px;
+}
+
+.home .hotel-cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* If the HotelCard component has its own styling, you may not need the below */
+.home .hotel-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  width: 300px; /* Or whatever width you prefer */
+}
+
+.home .hotel-card:hover {
+  transform: translateY(-10px);
+}
+
+.home .hotel-image {
+  width: 100%;
+  height: 200px; /* Adjust as needed */
+  object-fit: cover;
+}
+
+.home .hotel-info {
+  padding: 1rem;
+  background: #fff;
+}
+
+.home .hotel-info h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.home .hotel-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* You might want to add styles for stars */
+.home .hotel-stars {
+  /* Style your stars here */
+}

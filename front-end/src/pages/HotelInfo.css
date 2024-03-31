@@ -1,0 +1,63 @@
+/* HotelInfo.css */
+.hotel-info-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .hotel-images {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .hotel-rating {
+    color: gold;
+    margin-bottom: 10px;
+  }
+  
+  .hotel-description {
+    margin-bottom: 20px;
+  }
+  
+  .hotel-amenities ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .hotel-amenities li {
+    background: lightgrey;
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  
+  .hotel-map {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .reserve-room-btn {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  

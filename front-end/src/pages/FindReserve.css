@@ -1,0 +1,108 @@
+.find-reserve-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.filter-amenities-button {
+  background-image: linear-gradient(to right, #6e48aa, #9d50bb); /* A purple gradient */
+  color: white; /* White text for contrast */
+  padding: 10px 25px; /* Spacious padding for a larger click area */
+  font-size: 16px; /* A comfortable font size */
+  font-weight: 500; /* Semi-bold text */
+  border: none; /* No border for a button with a background */
+  border-radius: 25px; /* Fully rounded ends for a pill shape */
+  cursor: pointer; /* Indicate the element is clickable */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow for depth */
+  transition: box-shadow 0.3s ease, transform 0.2s ease; /* Smooth transitions for interaction */
+  outline: none; /* Remove outline to prevent a box outline on click in some browsers */
+  text-transform: uppercase; /* Uppercase lettering for a more commanding presence */
+}
+
+.filter-amenities-button:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* A deeper shadow for hover state */
+  transform: translateY(-2px); /* Slightly raise the button on hover */
+}
+
+.filter-amenities-button:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Flatten the shadow on click */
+  transform: translateY(1px); /* Slightly lower the button on click */
+}
+
+
+.search-bar-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.room-listing {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.hotel-card {
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.hotel-card-content {
+  padding: 15px;
+}
+
+.hotel-card-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.hotel-card-price {
+  font-size: 1rem;
+  color: #666;
+}
+
+.filter-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.filter-control {
+  flex-basis: calc(33.333% - 20px); /* Adjust the percentage based on the number of filters */
+}
+
+.filter-checkbox {
+  accent-color: #007bff; /* Change the color to match your theme */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter-control {
+    flex-basis: 100%;
+  }
+
+  .room-listing {
+    grid-template-columns: 1fr;
+  }
+}

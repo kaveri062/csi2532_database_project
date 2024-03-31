@@ -1,0 +1,74 @@
+.about-us-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .about-us-header {
+    text-align: center;
+    padding-bottom: 30px;
+  }
+  
+  .hotel-chain-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .hotel-chain-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hotel-chain-name {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .hotel-chain-detail {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 5px;
+  }
+  
+  .hotel-chain-contact {
+    margin-top: 10px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .about-us-container {
+      padding: 10px;
+    }
+  
+    .hotel-chain-name {
+      font-size: 20px;
+    }
+  }
+  .about-us-container {
+    padding: 20px;
+  }
+  
+  .hotel-chain-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .hotels-list h3 {
+    margin-top: 10px;
+  }
+  
+  .hotels-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .hotels-list li {
+    padding: 5px 0;
+  }
+  
