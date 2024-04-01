@@ -1,106 +1,85 @@
-/* SignInModal.css */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.75); /* Darker overlay for a more dramatic effect */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1050; /* Ensures it's on top of other content */
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 40px;
-    border-radius: 15px; /* More pronounced rounded corners */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Larger shadow for a floating effect */
-    width: 100%;
-    max-width: 450px; /* A bit wider for a more spacious form */
-    box-sizing: border-box;
-    position: relative;
-    animation: modalFadeIn 0.5s ease-out;
-  }
-  
-  .modal-content h2 {
-    color: #333;
-    font-size: 24px; /* Larger font size */
-    font-weight: 600;
-    margin-bottom: 20px; /* More space below the header */
-    text-align: center;
-  }
-  
-  .modal-content form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input[type="email"],
-  input[type="password"] {
-    font-size: 16px; /* Larger font size */
-    padding: 15px 20px; /* More padding for a better touch target */
-    margin-bottom: 15px; /* More space between fields */
-    border: none; /* Remove border */
-    border-radius: 8px; /* Rounded corners for inputs */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* Subtle inset shadow */
-    outline-color: #007bff; /* Blue outline on focus for a pop of color */
-  }
-  
-  button[type="submit"] {
-    font-size: 16px;
-    padding: 15px 20px;
-    background-color: #007bff; /* Use your primary color here */
-    color: white;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Shadow for the button */
-    margin-top: 10px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3; /* A slightly darker blue for the hover state */
-  }
-  
-  button.close-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px; /* Larger close button */
-    background: none;
-    border: none;
-    color: #666;
-    cursor: pointer;
-  }
-  
-  @keyframes modalFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-/* SignInModal.css */
-.user-type-selection button {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7); /* Dim the background */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Don't let the modal get too wide */
+  text-align: center;
+}
+
+.close-button {
+  background: none;
   border: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.user-type-selection button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
   border-radius: 5px;
+  color: white;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .user-type-selection button:hover {
   background-color: #0056b3;
 }
 
-/* Add or adjust other styles as needed */
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
 
-  
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-bottom: 20px;
+}

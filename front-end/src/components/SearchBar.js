@@ -1,4 +1,3 @@
-// SearchBar.js
 import React, { useState } from 'react';
 import RoomGuestsPopup from './RoomGuestsPopup'; // Import your RoomGuestsPopup component
 import './SearchBar.css'; // Ensure you have the CSS file

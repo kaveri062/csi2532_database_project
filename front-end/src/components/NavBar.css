@@ -1,80 +1,69 @@
-/* NavBar.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f8f8f8; /* Light grey background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding: 0 20px;
-  font-family: 'Open Sans', sans-serif; /* Stylish font */
-}
-
+/* Reset list styles for the nav */
 .navbar-nav {
   list-style: none;
-  display: flex;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Align links vertically */
+}
+
+/* Styling for the nav bar */
+.navbar {
+  background-color: #333; /* Dark background for contrast */
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Space out the nav items */
+  padding: 0.8em 2em;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em; /* Add padding for clickable area */
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.navbar a:hover,
+.nav-item:hover {
+  color: #007bff; /* Highlight text on hover */
+  cursor: pointer;
+}
+
+/* Items on the right side such as sign-in/sign-out */
+.navbar-right {
+  display: flex;
 }
 
 .nav-item {
-  margin: 0 20px;
-  padding: 10px 0;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: #333;
-  transition: color 0.3s ease;
+  margin-right: 20px; /* Add some space between nav items */
 }
 
-.nav-item:hover {
-  color: #0056b3; /* Color changes on hover */
-}
-
-.navbar-right {
-  align-items: center;
-  display: flex;
-}
-
-.navbar-right .nav-item {
-  margin: 0 15px;
-}
-
-.navbar-right .nav-item:not(:last-child) {
-  border-right: 1px solid #ddd;
-  padding-right: 15px;
-}
-
-.brand-logo {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #0056b3;
-  margin-right: auto;
-}
-
+/* Responsive design for mobile */
 @media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
   .navbar-nav {
-    display: block;
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar a {
     text-align: center;
+    padding: 10px;
+    border-top: 1px solid #555; /* Add a border to each link for clarity */
+    width: 100%;
   }
-
-  .nav-item {
-    display: block;
-    margin: 10px 0;
-  }
-
   .navbar-right {
-    text-align: center;
-    margin-top: 10px;
+    flex-direction: column;
+    width: 100%;
   }
-
-  .navbar-right .nav-item {
-    border-right: none;
-    padding-right: 0;
+  .nav-item:last-child {
+    margin-right: 0;
   }
 }
-.nav-item .fa-icon {
-    margin-right: 5px;
-  }
+
+/* When a user is authenticated, style the welcome message */
+.nav-item.welcome-message {
+  font-weight: bold; /* Make the username bold */
+}

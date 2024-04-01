@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import './SignInModal.css'; // Ensure the CSS file is correctly linked
+import { useAuth } from '../components/AuthContext'; // Adjust the path as necessary
+import './SignInModal.css';
 
 const SignInModal = ({ isVisible, onClose }) => {
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const { signIn } = useAuth();
 
   const handleClose = () => {
     setUserType('');
@@ -19,47 +22,23 @@ const SignInModal = ({ isVisible, onClose }) => {
     e.preventDefault();
     
     try {
-
       const response = await fetch(`http://localhost:8080/${userType === 'employee' ? 'employees' : 'client'}/authenticate`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        
-        body: JSON.stringify({
-          ssn: email.trim(), // Assuming email is the SSN for employees and clients
-          password: password.trim(),
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ssn: email.trim(), password: password.trim() }),
       });
 
-      // const data = await response.json();
-      let responseData;
-  try {
-    responseData = await response.json(); // Parse response body as JSON
-  } catch (jsonError) {
-    console.error('Error parsing JSON response:', jsonError.message);
-    throw new Error('Unexpected response format');
-  }
+      let responseData = await response.json();
 
       if (!response.ok) {
         throw new Error('Failed to authenticate');
       }
 
       if (responseData && responseData.ssn) {
-        const ssn = responseData.ssn;
-        sessionStorage.setItem('ssn', ssn);
-        const ssnFromStorage = sessionStorage.getItem('ssn');
-        userType === 'employee' ? sessionStorage.setItem('Client', false) : sessionStorage.setItem('Client', true);
-
-      console.log(ssnFromStorage, userType);     
-
+        signIn(userType, responseData.name || 'User'); // Use signIn to update global state
+        handleClose(); // Close the modal on success
       }
-
-//storing the ssn to use later
-      console.log('Authentication successful:');
-      handleClose();
     } catch (error) {
-      console.error('Error during authentication:', error.message);
       setError(error.message);
     }
   };
