@@ -40,7 +40,7 @@ public class ClientController {
 
             if (SsnAndPasswordRequest.getSsn().equals(storedSsn)) {
                 if (SsnAndPasswordRequest.getPassword().equals(storedPassword)) {
-                    return storedSsn;
+                    return "{\"ssn\": \"" + storedSsn + "\"}";
                 } else {
                     return "Incorrect password";
                 }
