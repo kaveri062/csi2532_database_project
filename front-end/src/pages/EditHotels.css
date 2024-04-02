@@ -1,0 +1,128 @@
+.edit-hotels-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .edit-hotels-container h1 {
+    color: #333;
+    text-align: center;
+  }
+  
+  .selectors,
+  .hotel-info,
+  .edit-hotel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem;
+  }
+  
+  .selectors select,
+  .hotel-info input,
+  .edit-hotel-info input {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  .find-hotel-button,
+  .edit-button,
+  .delete-button,
+  .save-button,
+  .cancel-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .find-hotel-button {
+    background-color: #5C6BC0;
+  }
+  
+  .edit-button {
+    background-color: #FFCA28;
+  }
+  
+  .delete-button {
+    background-color: #EF5350;
+  }
+  
+  .save-button {
+    background-color: #66BB6A;
+  }
+  
+  .cancel-button {
+    background-color: #78909C;
+  }
+  
+  .find-hotel-button:hover,
+  .edit-button:hover,
+  .delete-button:hover,
+  .save-button:hover,
+
+
+  
+  .hotel-info {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .hotel-info h2 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .hotel-info p {
+    color: #666;
+  }
+  
+  .edit-hotel-info input {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .room-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .room-type {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 4px;
+    width: calc(50% - 1rem);
+  }
+  
+  .room-type .capacity {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .room-type .room-count,
+  .room-type .price {
+    color: #666;
+  }
+  
+  @media (max-width: 768px) {
+    .room-type {
+      width: 100%;
+    }
+  }
+  

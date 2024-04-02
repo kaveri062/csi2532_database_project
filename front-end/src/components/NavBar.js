@@ -17,8 +17,9 @@ function NavBar() {
           <li className="nav-item">
             <Link to="/">HOME</Link>
           </li>
+          {/* Conditional rendering based on userType */}
           {isAuthenticated && userType === 'employee' ? (
-            // Navigation options for authenticated employees
+            // Links visible only to employees
             <>
               <li className="nav-item">
                 <Link to="/direct-renting">DIRECT RENTING</Link>
@@ -28,7 +29,7 @@ function NavBar() {
               </li>
             </>
           ) : (
-            // Navigation options for non-authenticated users or clients
+            // Links visible to all other users
             <>
               <li className="nav-item">
                 <Link to="/about-us">ABOUT US</Link>
