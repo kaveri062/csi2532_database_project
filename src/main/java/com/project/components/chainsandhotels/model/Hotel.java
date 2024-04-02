@@ -1,9 +1,11 @@
 package com.project.components.chainsandhotels.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "hotels")
 public class Hotel {
     @Id
