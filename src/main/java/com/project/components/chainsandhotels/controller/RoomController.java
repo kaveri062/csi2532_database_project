@@ -47,8 +47,18 @@ public class RoomController {
             roomData.put("rating", room.getHotel().getRating());
             roomData.put("price", room.getPrice());
             roomData.put("amenities", room.getAmenities());
-            response.put(room.getHotel().getName(), Collections.singletonList(roomData));
 
+            // Check if the hotel name already exists in the response map
+            if (response.containsKey(room.getHotel().getName())) {
+                // If it exists, append the room data to the existing list of rooms for that hotel
+                List<Map<String, Object>> hotelRooms = response.get(room.getHotel().getName());
+                hotelRooms.add(roomData);
+            } else {
+                // If it doesn't exist, create a new list and add the room data to it
+                List<Map<String, Object>> hotelRooms = new ArrayList<>();
+                hotelRooms.add(roomData);
+                response.put(room.getHotel().getName(), hotelRooms);
+            }
         }
         return ResponseEntity.ok(response);
     }
