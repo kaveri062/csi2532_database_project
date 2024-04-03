@@ -1,56 +1,58 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { hotelChains } from '../data/hotels';
-import BookingFormPopup from '../components/BookingFormPopup'; // Adjust path as needed
-import './HotelInfo.css'; // Make sure the CSS file path is correct
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import RBC from '../components/RBC'; // Update import to the correct path of your RBC component
 
-const HotelInfo = () => {
-  const { hotelName } = useParams();
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  
-  let hotel = null;
-  let chainName = '';
-  for (const chain of hotelChains) {
-    hotel = chain.hotels.find(h => h.hotelName === hotelName);
-    if (hotel) {
-      chainName = chain.chainName;
-      break;
-    }
-  }
+const HotelInfo = ({ hotelName }) => {
+  const [hotelDetails, setHotelDetails] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
-  if (!hotel) {
-    return <div>Hotel not found</div>;
+  useEffect(() => {
+    const fetchHotelDetails = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/hotelchains/getHotelChainsAndHotels');
+        if (!response.ok) throw new Error('Failed to fetch hotel details');
+
+        const data = await response.json();
+        let foundHotel = null;
+
+        Object.values(data).forEach(chains => {
+          chains.forEach(chain => {
+            const hotel = chain.hotels.find(h => h.name === hotelName);
+            if (hotel) {
+              foundHotel = { ...hotel, chainName: chain.chainName };
+            }
+          });
+        });
+
+        if (!foundHotel) throw new Error('Hotel not found');
+        setHotelDetails(foundHotel);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchHotelDetails();
+  }, [hotelName]);
+
+  const handleBookNow = (room) => {
+    setSelectedRoom(room);
+    setShowPopup(true);
+  };
+
+  if (!hotelDetails) {
+    return <div>Loading hotel information...</div>;
   }
 
   return (
-    <div className="hotel-info-container">
-      <button onClick={() => window.history.back()}>← Back to results</button>
-      <div className="hotel-images">
-        <img src={hotel.rooms[0].imageUrl} alt={`${hotel.hotelName}`} />
-      </div>
-      <h1>{`${hotel.hotelName} by ${chainName}`}</h1>
-      <div className="hotel-rating">
-        {'★'.repeat(hotel.rating) + '☆'.repeat(5 - hotel.rating)}
-      </div>
-      <p className="hotel-description">This is a short description of the hotel...</p>
-      <div className="hotel-amenities">
-        <h3>Amenities:</h3>
-        <ul>
-          {hotel.rooms[0].amenities.map((amenity, index) => (
-            <li key={index}>{amenity}</li>
-          ))}
-        </ul>
-      </div>
-      <p className="hotel-address">{hotel.address}</p>
-      <div className="hotel-map">View in a map</div>
-      <button className="reserve-room-btn" onClick={() => setShowBookingForm(true)}>
-        Reserve a Room
-      </button>
-
-      {showBookingForm && (
-        <BookingFormPopup 
-          hotel={hotel} 
-          onClose={() => setShowBookingForm(false)} 
+    <div>
+      <Link to="/about-us" className="back-to-results-link">← Back to Results</Link>
+      <h1>{hotelDetails.name} - {hotelDetails.chainName}</h1>
+      <button onClick={() => handleBookNow(hotelDetails)}>Book a Room</button>
+      {showPopup && (
+        <RBC
+          room={selectedRoom}
+          onClose={() => setShowPopup(false)}
         />
       )}
     </div>

@@ -9,7 +9,9 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState('');
   // State for the RoomGuestsPopup visibility
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+  // List of locations to choose from
+  const locations = ['New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Miami, FL'];
+
   // Function to toggle the RoomGuestsPopup
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -25,15 +27,18 @@ const SearchBar = () => {
     <div className="search-bar-wrapper">
       <form className="search-bar" onSubmit={handleSearch}>
         <div className="input-group">
-          <label htmlFor="destination" className="input-label">Enter a destination</label>
-          <input
-            type="text"
+          <label htmlFor="destination" className="input-label">Choose a location</label>
+          <select
             id="destination"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="New York, NY"
             className="input-field"
-          />
+          >
+            <option value="">Select</option>
+            {locations.map((location, index) => (
+              <option key={index} value={location}>{location}</option>
+            ))}
+          </select>
         </div>
         <div className="input-group">
           <label htmlFor="check-in" className="input-label">Check-in date</label>

@@ -1,67 +1,91 @@
 .room-booking-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10;
-  }
-  
-  .room-booking-popup {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-  }
-  
-  .close-popup-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
-  
-  .booking-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-field {
-    margin-bottom: 15px;
-  }
-  
-  .form-field label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-field input[type="text"],
-  .form-field input[type="email"],
-  .form-field select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .submit-booking-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-booking-btn:hover {
-    background-color: #0056b3;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.room-booking-popup {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+.close-popup-button {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.close-popup-button:hover {
+  transform: rotate(90deg);
+}
+
+.booking-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field label {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="number"],
+.form-field input[type="date"],
+.form-field select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.form-field input[type="text"]:focus,
+.form-field input[type="email"]:focus,
+.form-field input[type="number"]:focus,
+.form-field input[type="date"]:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.submit-booking-btn {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit-booking-btn:hover {
+  background-color: #0056b3;
+}

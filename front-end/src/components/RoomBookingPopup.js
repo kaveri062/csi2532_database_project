@@ -1,71 +1,110 @@
 import React, { useState } from 'react';
-import './RoomBookingPopup.css'; // Ensure your CSS file is correctly linked
+import './RoomBookingPopup.css';
 
 const RoomBookingPopup = ({ room, onClose }) => {
-  const [bookingDetails, setBookingDetails] = useState({
-    hotelChain: room.chainName,
-    hotelLocation: room.address,
-    roomsAndGuests: '1 Room, 2 Guests',
-    fullName: '',
-    email: '',
-    // Include initial values for any other fields
-  });
+    console.log("RoomBookingPopup rendered");
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setBookingDetails({
-      ...bookingDetails,
-      [name]: value
+    const [bookingDetails, setBookingDetails] = useState({
+        guests: '2',
+        rooms: '1',
+        fullName: '',
+        email: '',
+        checkInDate: '',
+        checkOutDate: '',
     });
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add your booking processing logic here
-    console.log('Booking Details:', bookingDetails);
-    onClose(); // This should close the popup
-  };
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setBookingDetails(prev => ({ ...prev, [name]: value }));
+    };
 
-  return (
-    <div className="room-booking-popup-overlay">
-      <div className="room-booking-popup">
-        <button onClick={onClose} className="close-popup-button">×</button>
-        <h2>Book your room</h2>
-        <form onSubmit={handleSubmit} className="booking-form">
-          {/* Render form inputs here */}
-          {/* Example: Full Name Input */}
-          <div className="form-field">
-            <label htmlFor="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={bookingDetails.fullName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          {/* Example: Email Input */}
-          <div className="form-field">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={bookingDetails.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          
-          {/* Repeat for other inputs */}
-          <button type="submit" className="submit-booking-btn">
-            Confirm Booking
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Booking Details:', bookingDetails);
+        onClose();
+    };
+
+    if (!room) {
+        return <div>Loading room details...</div>;
+    }
+
+    return (
+        <div className="room-booking-popup-overlay">
+            <div className="room-booking-popup">
+                <button onClick={onClose} className="close-popup-button">×</button>
+                <h2>Reserve Your Room</h2>
+                <form onSubmit={handleSubmit} className="booking-form">
+                    <div className="form-field">
+                        <label htmlFor="guests">Number of Guests:</label>
+                        <input
+                            type="number"
+                            id="guests"
+                            name="guests"
+                            value={bookingDetails.guests}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="rooms">Number of Rooms:</label>
+                        <input
+                            type="number"
+                            id="rooms"
+                            name="rooms"
+                            value={bookingDetails.rooms}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="fullName">Full Name:</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            value={bookingDetails.fullName}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={bookingDetails.email}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="checkInDate">Check-In Date:</label>
+                        <input
+                            type="date"
+                            id="checkInDate"
+                            name="checkInDate"
+                            value={bookingDetails.checkInDate}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="checkOutDate">Check-Out Date:</label>
+                        <input
+                            type="date"
+                            id="checkOutDate"
+                            name="checkOutDate"
+                            value={bookingDetails.checkOutDate}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="submit-booking-btn">Submit Reservation</button>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default RoomBookingPopup;

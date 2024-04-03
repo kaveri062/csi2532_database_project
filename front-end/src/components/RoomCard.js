@@ -1,39 +1,17 @@
-// RoomCard.js
-import React, { useState } from 'react';
-import RoomBookingPopup from './RoomBookingPopup'; // Make sure this component exists and is correctly imported
-import './RoomCard.css'; // Ensure your CSS file is correctly linked
+import React from 'react';
+import './RoomCard.css';
 
-const RoomCard = ({ room }) => {
-  const [isBookingPopupVisible, setIsBookingPopupVisible] = useState(false);
-
-  // Toggle the visibility of the booking popup
-  const toggleBookingPopup = () => {
-    setIsBookingPopupVisible(!isBookingPopupVisible);
-  };
-
-  // Destructure the room data for easy access
-  const { hotelName, address, price, amenities, imageUrl, rating } = room;
-
-  return (
-    <div className="room-card">
-      <img src={imageUrl} alt={`Room at ${hotelName}`} className="room-card-image" />
-      <div className="room-card-content">
-        <h3 className="room-card-hotelName">{hotelName}</h3>
-        <p className="room-card-address">{address}</p>
-        <p className="room-card-price">${price} per night</p>
-        <div className="room-card-amenities">
-          Amenities: {amenities.join(', ')}
+const RoomCard = ({ room, onBookNow }) => {
+    return (
+        <div className="room-card">
+            <h3>{room.hotelName}</h3>
+            <div className="room-detail">{room.address}</div>
+            <div className="room-rating">Rating: {room.rating} ★</div>
+            <div className="room-price">Price: ${room.price}</div>
+            <div className="room-amenities">Amenities: {room.amenities}</div>
+            <button onClick={() => onBookNow(room)}>Book Now</button>
         </div>
-        {rating && <div className="room-card-rating">Rating: {rating} stars</div>}
-        <button onClick={toggleBookingPopup} className="book-now-btn">
-          Book Now
-        </button>
-      </div>
-      {isBookingPopupVisible && (
-        <RoomBookingPopup room={room} onClose={toggleBookingPopup} />
-      )}
-    </div>
-  );
+    );
 };
 
 export default RoomCard;

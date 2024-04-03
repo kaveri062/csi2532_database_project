@@ -1,27 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DirectRenting.css';
 import AddReservationForm from '../components/AddReservationForm'; // Adjust the import path as necessary
 
 const DirectRenting = () => {
-  const [ssn, setSsn] = useState(''); // Use SSN instead of email
+  const [employeeId, setEmployeeId] = useState('111-22-3333'); // Example employee ID
+  const [clientSsn, setClientSsn] = useState('');
   const [booking, setBooking] = useState(null);
   const [showAddReservation, setShowAddReservation] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleFindBooking = async () => {
-    // Replace this mock logic with an actual API call using SSN
-    console.log('Searching for booking for SSN:', ssn);
-    if (ssn === '123-45-6789') { // Example SSN, replace with actual logic
-      const mockBookingData = {
-        clientName: 'John Doe',
-        clientSSN: '123-45-6789', // Use SSN in the data
-        details: 'Mar 12 - Mar 13 2024, 1 Room, 2 Guests',
-        price: '215',
-      };
-      setBooking(mockBookingData);
-      console.log('Booking found:', mockBookingData);
+  useEffect(() => {
+    if (clientSsn.trim() === '') {
+      setError('Please enter the client’s SSN.');
     } else {
-      setBooking(null);
-      console.log('No booking found for that SSN.');
+      setError(null);
+    }
+  }, [clientSsn]);
+
+  const fetchBookingData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/reservations/clientReservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          employeeId,
+          clientId: clientSsn,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch booking data');
+      }
+
+      const data = await response.json();
+      console.log('API response:', data); // Log the API response for debugging
+
+      // Assuming data is an array and we want the first item
+      if (Array.isArray(data) && data.length > 0) {
+        setBooking(data[0]);
+        console.log('Booking found:', data[0]);
+      } else {
+        setBooking(null);
+        console.log('No booking found for that SSN.');
+        setError('No booking found for that SSN.');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error.message);
+      setError('Failed to fetch booking data. Please try again.');
     }
   };
 
@@ -42,20 +69,23 @@ const DirectRenting = () => {
   return (
     <div className="direct-renting">
       <input
-        type="text" // SSN might include dashes, so 'text' type is more appropriate
+        type="text"
         placeholder="Enter the client’s SSN"
-        value={ssn}
-        onChange={(e) => setSsn(e.target.value)}
-        className="email-input" // Consider renaming this class to something more generic like 'input-field'
+        value={clientSsn}
+        onChange={(e) => setClientSsn(e.target.value)}
+        className="email-input"
       />
-      <button onClick={handleFindBooking} className="find-booking-btn">
+      <button onClick={fetchBookingData} className="find-booking-btn">
         Find booking
       </button>
 
+      {error && <div className="error">{error}</div>}
+
       {booking && (
         <div className="booking-details">
-          <h2>{booking.clientName} - {booking.clientSSN}</h2> // Display SSN
-          <p>{booking.details}</p>
+          <h2>{booking.clientId}</h2> {/* Display client ID */}
+          <p>Check-in: {booking.checkIn}</p>
+          <p>Check-out: {booking.checkOut}</p>
           <button onClick={handleSaveChanges} className="save-btn">Save</button>
           <button onClick={handleDeleteBooking} className="delete-btn">Delete</button>
           <div className="payment-method-form">

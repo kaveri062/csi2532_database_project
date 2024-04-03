@@ -1,60 +1,92 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FilterPopup.css';
 
-const FilterPopup = ({
-  isOpen,
-  onClose,
-  onApplyFilters,
-  availableAmenities
-}) => {
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
+const FilterPopup = ({ onClose, filters, setFilters, applyFilters }) => {
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        // Directly update the filter with the selected value.
+        setFilters({ ...filters, [name]: value });
+    };
 
-  const handleSelectAmenity = (amenity) => {
-    setSelectedAmenities(prevSelectedAmenities => {
-      if (prevSelectedAmenities.includes(amenity)) {
-        return prevSelectedAmenities.filter(item => item !== amenity);
-      } else {
-        return [...prevSelectedAmenities, amenity];
-      }
-    });
-  };
+    const applyFiltersHandler = () => {
+        applyFilters(filters); // Pass updated filters to the parent component for filtering
+    };
 
-  const handleApplyFilters = () => {
-    onApplyFilters(selectedAmenities);
-    onClose();
-  };
+    const hotelChains = [
+        'North Star Lodgings',
+        'Maple Leaf Resorts',
+        'Urban Getaway Hotels',
+        'Cascadia Boutique Retreats',
+        'Lakeside Leisure Resorts'
+    ];
+    const capacities = ['1', '2', '3', '4', '5','6','7'];
+    const ratings = ['1', '2', '3', '4', '5'];
 
-  const handleResetFilters = () => {
-    setSelectedAmenities([]);
-    onApplyFilters([]);
-  };
+    const createCheckboxGroup = (title, items, name) => (
+        <>
+            <h3>{title}</h3>
+            {items.map((item, index) => (
+                <label key={index}>
+                    <input
+                        type="checkbox"
+                        name={name}
+                        value={item}
+                        checked={filters[name] === item}
+                        onChange={handleInputChange}
+                    />
+                    {item}
+                </label>
+            ))}
+        </>
+    );
 
-  if (!isOpen) return null;
+    return (
+        <div className="filter-popup-overlay">
+            <div className="filter-popup">
+                <h2>Filters</h2>
+                <button onClick={onClose} className="close-button">X</button>
 
-  return (
-    <div className="filter-popup-overlay">
-      <div className="filter-popup">
-        <button onClick={onClose} className="close-button">×</button>
-        <h2>Select Amenities</h2>
-        <div className="amenities-list">
-          {availableAmenities.map((amenity, index) => (
-            <label key={index} className="amenity-option">
-              <input
-                type="checkbox"
-                checked={selectedAmenities.includes(amenity)}
-                onChange={() => handleSelectAmenity(amenity)}
-              />
-              {amenity}
-            </label>
-          ))}
+                {createCheckboxGroup('Hotel Chain', hotelChains, 'chainName')}
+                {createCheckboxGroup('Room Capacity', capacities, 'capacity')}
+                {createCheckboxGroup('Rating', ratings, 'rating')}
+
+                <div>
+                    <h3>Price Range</h3>
+                    <label htmlFor="minPrice">Min Price</label>
+                    <select name="minPrice" value={filters.minPrice} onChange={handleInputChange}>
+                        <option value="0">$0</option>
+                        <option value="50">$50</option>
+                        <option value="100">$100</option>
+                        <option value="150">$150</option>
+                        <option value="200">$200</option>
+                        <option value="250">$250+</option>
+                    </select>
+
+                    <label htmlFor="maxPrice">Max Price</label>
+                    <select name="maxPrice" value={filters.maxPrice} onChange={handleInputChange}>
+                        <option value="100">$100</option>
+                        <option value="150">$150</option>
+                        <option value="200">$200</option>
+                        <option value="250">$250</option>
+                        <option value="300">$300</option>
+                        <option value="10000">$300+</option>
+                    </select>
+                </div>
+
+                <div className="filter-actions">
+                    <button className="reset-button" onClick={() => setFilters({
+                        chainName: '',
+                        location: '',
+                        capacity: 0,
+                        minPrice: 0,
+                        maxPrice: 10000,
+                        rating: 0,
+                    })}>Reset</button>
+                    <button className="apply-button" onClick={applyFiltersHandler}>Apply</button>
+                </div>
+            </div>
         </div>
-        <div className="filter-actions">
-          <button onClick={handleApplyFilters} className="apply-button">Apply</button>
-          <button onClick={handleResetFilters} className="reset-button">Reset</button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default FilterPopup;

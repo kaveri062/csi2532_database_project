@@ -1,5 +1,5 @@
 .home .parallax-section {
-  height: 50vh;
+  height: 100vh;
   background-image: url('https://mbluxury1.s3.amazonaws.com/2022/11/17184850/Luxury-Hotel-Chains-1.jpg'); /* Replace with the path to your parallax background image */
   background-attachment: fixed;
   background-position: center;
@@ -71,7 +71,3 @@
   color: #666;
 }
 
-/* You might want to add styles for stars */
-.home .hotel-stars {
-  /* Style your stars here */
-}
