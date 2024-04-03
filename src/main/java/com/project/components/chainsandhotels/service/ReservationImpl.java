@@ -45,4 +45,9 @@ public class ReservationImpl implements ReservationService {
         return reservationRepository.findByHotelIdAndClientId(employeeHotelId, clientId);
     }
 
+    @Override
+    public Reservation createReservation(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
+
 }

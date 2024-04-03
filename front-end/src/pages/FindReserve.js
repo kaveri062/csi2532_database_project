@@ -73,6 +73,8 @@ const FindReserve = () => {
                 />
             )}
             {isBookingPopupOpen && selectedRoom && (
+                    console.log("hide", filters.chainName),
+
                 <RoomBookingPopup
                     room={selectedRoom}
                     onClose={() => setIsBookingPopupOpen(false)}

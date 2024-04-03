@@ -34,6 +34,8 @@ public class RoomController {
         for (Room room : rooms) {
             Map<String, Object> roomData = new LinkedHashMap<>();
             roomData.put("hotelName", room.getHotel().getName());
+            roomData.put("hotelId", room.getHotel().getHotelId());
+            roomData.put("roomId", room.getId());
             roomData.put("address", room.getHotel().getAddress());
             roomData.put("rating", room.getHotel().getRating());
             roomData.put("price", room.getPrice());

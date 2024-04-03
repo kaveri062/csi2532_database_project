@@ -7,6 +7,7 @@ const RBC = ({ room, onClose }) => {
     const [bookingDetails, setBookingDetails] = useState({
         guests: '2',
         rooms: '1',
+        ssn: '',
         fullName: '',
         email: '',
         checkInDate: '',
@@ -53,6 +54,17 @@ const RBC = ({ room, onClose }) => {
                             id="rooms"
                             name="rooms"
                             value={bookingDetails.rooms}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="SSN">Social Security Number:</label>
+                        <input
+                            type="text"
+                            id="ssn"
+                            name="ssn"
+                            value={bookingDetails.ssn}
                             onChange={handleInputChange}
                             required
                         />

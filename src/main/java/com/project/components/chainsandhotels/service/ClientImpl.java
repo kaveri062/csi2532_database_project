@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientImpl implements ClientService {
@@ -25,4 +26,10 @@ public class ClientImpl implements ClientService {
     public List<Object[]> findSsnAndPassword() {
         return clientRepository.findSsnAndPassword();
     }
+
+    @Override
+    public Optional<Client> getClientBySsn(String clientId) {
+        return clientRepository.findById(clientId);
+    }
+
 }

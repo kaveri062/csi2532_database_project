@@ -11,6 +11,7 @@ import java.sql.Date;
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Integer id;
 
@@ -18,10 +19,10 @@ public class Reservation {
     private String clientId;
 
     @Column(name = "hotel_id")
-    private Long hotelId;
+    private Integer hotelId;
 
     @Column(name = "room_id")
-    private Long roomId;
+    private Integer roomId;
 
     @Column(name = "check_in")
     private Date checkIn;
@@ -35,6 +36,8 @@ public class Reservation {
 
     public Reservation() {
     }
+
+
 
     public Integer getId() {
         return id;
@@ -52,19 +55,19 @@ public class Reservation {
         this.clientId = clientId;
     }
 
-    public Long getHotelId() {
+    public Integer getHotelId() {
         return hotelId;
     }
 
-    public void setHotelId(Long hotelId) {
+    public void setHotelId(Integer hotelId) {
         this.hotelId = hotelId;
     }
 
-    public Long getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Long roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 

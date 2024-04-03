@@ -19,7 +19,7 @@ const FilterPopup = ({ onClose, filters, setFilters, applyFilters }) => {
         'Cascadia Boutique Retreats',
         'Lakeside Leisure Resorts'
     ];
-    const capacities = ['1', '2', '3', '4', '5','6','7'];
+    const capacities = ['1', '2', '3', '4'];
     const ratings = ['1', '2', '3', '4', '5'];
 
     const createCheckboxGroup = (title, items, name) => (
@@ -45,10 +45,27 @@ const FilterPopup = ({ onClose, filters, setFilters, applyFilters }) => {
             <div className="filter-popup">
                 <h2>Filters</h2>
                 <button onClick={onClose} className="close-button">X</button>
+                <div>
+                    <h3>Location</h3>
+                    <input
+                        type="text"
+                        name="location"
+                        value={filters.location}
+                        onChange={handleInputChange}
+                        placeholder="Enter location"
+                    />
+                </div>
 
                 {createCheckboxGroup('Hotel Chain', hotelChains, 'chainName')}
-                {createCheckboxGroup('Room Capacity', capacities, 'capacity')}
-                {createCheckboxGroup('Rating', ratings, 'rating')}
+                <div>
+                    <h3>Rating</h3>
+                    <select name="rating" value={filters.rating} onChange={handleInputChange}>
+                        <option value="">Select Rating</option>
+                        {ratings.map((rating, index) => (
+                            <option key={index} value={rating}>{rating}</option>
+                        ))}
+                    </select>
+                </div>                {createCheckboxGroup('Rating', ratings, 'rating')}
 
                 <div>
                     <h3>Price Range</h3>
