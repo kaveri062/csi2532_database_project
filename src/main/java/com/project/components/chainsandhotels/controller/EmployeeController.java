@@ -1,7 +1,7 @@
-package com.project.components.employee.controller;
+package com.project.components.chainsandhotels.controller;
 
-import com.project.components.employee.model.Employee;
-import com.project.components.employee.service.EmployeeService;
+import com.project.components.chainsandhotels.model.Employee;
+import com.project.components.chainsandhotels.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

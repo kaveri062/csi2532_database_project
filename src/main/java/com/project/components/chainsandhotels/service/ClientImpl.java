@@ -1,7 +1,7 @@
-package com.project.components.client.service;
+package com.project.components.chainsandhotels.service;
 
-import com.project.components.client.model.Client;
-import com.project.components.client.repository.ClientRepository;
+import com.project.components.chainsandhotels.model.Client;
+import com.project.components.chainsandhotels.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

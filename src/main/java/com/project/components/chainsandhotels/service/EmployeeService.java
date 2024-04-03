@@ -1,6 +1,6 @@
-package com.project.components.employee.service;
+package com.project.components.chainsandhotels.service;
 
-import com.project.components.employee.model.Employee;
+import com.project.components.chainsandhotels.model.Employee;
 import java.util.List;
 
 public interface EmployeeService {

@@ -1,4 +1,4 @@
-package com.project.components.employee.model;
+package com.project.components.chainsandhotels.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

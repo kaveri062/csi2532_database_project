@@ -1,6 +1,6 @@
-package com.project.components.client.repository;
+package com.project.components.chainsandhotels.repository;
 
-import com.project.components.client.model.Client;
+import com.project.components.chainsandhotels.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
-package com.project.components.client.controller;
+package com.project.components.chainsandhotels.controller;
 
-import com.project.components.client.model.Client;
-import com.project.components.client.service.ClientService;
+import com.project.components.chainsandhotels.model.Client;
+import com.project.components.chainsandhotels.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

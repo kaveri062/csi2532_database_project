@@ -1,7 +1,7 @@
-package com.project.components.employee.service;
+package com.project.components.chainsandhotels.service;
 
-import com.project.components.employee.model.Employee;
-import com.project.components.employee.repository.EmployeeRepository;
+import com.project.components.chainsandhotels.model.Employee;
+import com.project.components.chainsandhotels.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.project.components.client.service;
+package com.project.components.chainsandhotels.service;
 
-import com.project.components.client.model.Client;
+import com.project.components.chainsandhotels.model.Client;
 
 import java.util.List;
 

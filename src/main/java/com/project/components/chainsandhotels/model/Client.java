@@ -1,4 +1,4 @@
-package com.project.components.client.model;
+package com.project.components.chainsandhotels.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
