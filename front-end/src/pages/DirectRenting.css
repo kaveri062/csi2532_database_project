@@ -38,6 +38,8 @@ body {
 /* Button styling */
 .find-booking-btn,
 .save-btn,
+.create-reservation-btn,
+.register-new-client-btn,
 .delete-btn,
 .add-booking-btn {
   padding: 0.75rem 1.5rem;
@@ -47,10 +49,11 @@ body {
   font-size: 1rem;
   transition: background-color 0.2s;
   margin-right: 0.5rem; /* Space between buttons */
+  margin-bottom: 10px;
 }
 
 /* Styling for different button types */
-.find-booking-btn {
+.find-booking-btn,.create-reservation-btn {
   background-color: #007bff;
   color: white;
 }
@@ -59,7 +62,7 @@ body {
   background-color: #0056b3;
 }
 
-.save-btn {
+.save-btn,.register-new-client-btn {
   background-color: #28a745;
   color: white;
 }

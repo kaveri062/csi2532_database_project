@@ -11,7 +11,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hotel_id")
-    private Long hotelId;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "chain_id", referencedColumnName = "chain_id")
@@ -35,12 +35,12 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Long getHotelId() {
-        return hotelId;
+    public Integer getHotelId() {
+        return id;
     }
 
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setHotelId(Integer hotelId) {
+        this.id = id;
     }
 
     public HotelChain getHotelChain() {

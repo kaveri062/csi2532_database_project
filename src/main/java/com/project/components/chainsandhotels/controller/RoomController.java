@@ -1,13 +1,17 @@
 package com.project.components.chainsandhotels.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.components.chainsandhotels.model.Reservation;
 import com.project.components.chainsandhotels.model.Room;
+import com.project.components.chainsandhotels.model.RoomDTO;
+import com.project.components.chainsandhotels.service.EmployeeService;
 import com.project.components.chainsandhotels.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -17,6 +21,9 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     //location, number of stars
 
@@ -43,11 +50,29 @@ public class RoomController {
             response.put(room.getHotel().getName(), Collections.singletonList(roomData));
 
         }
-
-//        List<Room> rooms = roomService.findRoomsByCriteria(request.getChainName(), request.getCapacity(), request.getMinPrice(), request.getMaxPrice());
-//       System.out.println(request.getChainName()+"hi");
-
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/roomsByEmployeeId")
+    public List<RoomDTO> getRoomsByEmployeeId(@RequestBody Map<String, String> requestBody) {
+        String employeeId = requestBody.get("employeeId");
+        List<Room> rooms = roomService.getRoomsByEmployeeSsn(employeeId);
+        return rooms.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private RoomDTO convertToDTO(Room room) {
+        RoomDTO dto = new RoomDTO();
+        dto.setId(room.getId());
+        dto.setType(room.getType());
+        dto.setPrice(room.getPrice());
+        dto.setAmenities(room.getAmenities());
+        dto.setCapacity(room.getCapacity());
+        dto.setSeaView(room.isSeaView());
+        dto.setExtendable(room.isExtendable());
+        dto.setIssues(room.getIssues());
+        return dto;
     }
 
 

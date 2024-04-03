@@ -26,4 +26,6 @@ public class EmployeeImpl implements EmployeeService{
     public List<Object[]> findSsnAndPassword() {
         return employeeRepository.findSsnAndPassword();
     }
+
+
 }

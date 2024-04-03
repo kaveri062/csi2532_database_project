@@ -34,6 +34,10 @@ const SignInModal = ({ isVisible, onClose }) => {
         throw new Error('Failed to authenticate');
       }
 
+      sessionStorage.setItem('ssn', responseData.ssn);
+      const ssnFromStorage = sessionStorage.getItem('ssn');
+      console.log(ssnFromStorage);
+
       if (responseData && responseData.ssn) {
         signIn(userType, responseData.name || 'User'); // Use signIn to update global state
         handleClose(); // Close the modal on success

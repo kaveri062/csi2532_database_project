@@ -2,6 +2,8 @@ package com.project.components.chainsandhotels.controller;
 
 import com.project.components.chainsandhotels.model.Client;
 import com.project.components.chainsandhotels.model.Reservation;
+import com.project.components.chainsandhotels.model.ReservationDTO;
+import com.project.components.chainsandhotels.repository.EmployeeRepository;
 import com.project.components.chainsandhotels.service.ClientService;
 import com.project.components.chainsandhotels.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class ReservationController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @PostMapping("/allReservations")
     public ResponseEntity<List<Reservation>> getReservationsForEmployee(@RequestBody Map<String, String> requestBody) {
@@ -52,6 +57,30 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
     }
 
+
+    @PostMapping("/saveEmployeeReservations")
+    public ResponseEntity<Reservation> createClientReservation(@RequestBody ReservationDTO request) {
+        String clientId = request.getClientId();
+        Optional<Client> clientOptional = clientService.getClientBySsn(clientId);
+
+        if (!clientOptional.isPresent()) {
+            // Client does not exist
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        Integer hotelId = employeeRepository.findHotelIdByEmployeeId(request.getEmployeeId());
+        Reservation reservation = new Reservation();
+        reservation.setId(request.getId());
+        reservation.setClientId(request.getClientId());
+        reservation.setHotelId(hotelId);
+        reservation.setRoomId(request.getRoomId());
+        reservation.setCheckIn(request.getCheckIn());
+        reservation.setCheckOut(request.getCheckOut());
+        reservation.setStatus(request.getStatus());
+        reservation.setPaid(request.isPaid());
+        Reservation newReservation = reservationService.createReservation(reservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newReservation);
+    }
 
     public static class ClientReservationRequest {
 

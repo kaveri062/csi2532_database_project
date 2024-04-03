@@ -1,29 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddReservationForm.css'; // Make sure you create this CSS file
 
 const AddReservationForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    hotelChain: '',
-    location: '',
     roomsGuests: '',
-    date: '',
-    fullName: '',
-    email: '',
+    roomId:'',
+    checkindate: '',
+    checkoutdate: '',
+    clientSsn: '',
     creditCardNumber: '',
     expiration: '',
     cvv: '',
   });
+
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/findAndReserve/roomsByEmployeeId', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            employeeId: sessionStorage.getItem('ssn'),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch rooms');
+        }
+
+        const data = await response.json();
+        setRooms(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchRooms();
+  }, []);
+
+  const handleRoomChange = (e) => {
+    const roomId = e.target.value;
+    const selectedRoom = rooms.find(room => room.id === roomId);
+    setSelectedRoom(selectedRoom);  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you handle the submission of the reservation data
-    console.log(formData);
-    onClose();
+    
+    try {
+      const response = await fetch('http://localhost:8080/reservations/saveEmployeeReservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          {
+            clientId: formData.ssn, // Assuming ssn is the client ID
+            employeeId: sessionStorage.getItem('ssn'),
+            roomId: selectedRoom.id, // Pass the roomId from the room
+            checkIn: formData.checkInDate,
+            checkOut: formData.checkOutDate,
+            status: 'checkedIn', // Set default status
+            paid: true // Set default paid status           
+          }
+        ),
+      });
+    
+      console.log("hi", selectedRoom.id);
+
+      if (!response.ok) {
+        throw new Error('Failed to create reservation');
+      }
+
+      // Handle success, such as displaying a success message
+      console.log('Reservation created successfully');
+      onClose(); // Close the modal on success
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -32,22 +108,11 @@ const AddReservationForm = ({ onClose }) => {
         <h2>Direct renting</h2>
         <form onSubmit={handleSubmit}>
           {/* Include the form fields based on the provided design */}
-          <label>Hotel Chain
-            <select name="hotelChain" value={formData.hotelChain} onChange={handleInputChange}>
-              <option value="">Select a hotel chain</option>
-              <option value="oceanBreezeRetreat">Ocean Breeze Retreat</option>
-              {/* Other hotel chain options */}
-            </select>
-          </label>
           
-          <label>Location
-            <select name="location" value={formData.location} onChange={handleInputChange}>
-              <option value="">Select a location</option>
-              <option value="123NewYorkSt">123 New York Street, NY</option>
-              {/* Other location options */}
-            </select>
+          <label>Client Social Security Number
+          <input type="text" name="clientSsn" placeholder="Social Security Number" value={formData.clientSsn} onChange={handleInputChange} />
           </label>
-          
+
           <label>Number of rooms & guests
             <select name="roomsGuests" value={formData.roomsGuests} onChange={handleInputChange}>
               <option value="">Select rooms and guests</option>
@@ -56,17 +121,42 @@ const AddReservationForm = ({ onClose }) => {
             </select>
           </label>
           
-          <label>Full name
-            <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} />
-          </label>
           
-          <label>Email address
-            <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
-          </label>
           
-          <label>Date
-            <input type="text" name="date" value={formData.date} onChange={handleInputChange} />
-          </label>
+          <div className="input-group">
+          <label htmlFor="check-in" className="input-label">Check-in date</label>
+          <input
+            type="date"
+            id="check-in"
+            value={formData.checkIn}
+            onChange={(e) => setCheckIn(e.target.value)}
+            className="input-field"
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="check-out" className="input-label">Check-out date</label>
+          <input
+            type="date"
+            id="check-out"
+            value={formData.checkOut}
+            onChange={(e) => setCheckOut(e.target.value)}
+            className="input-field"
+          />
+        </div>
+
+
+        <div>
+      <label htmlFor="room-select">Select a room:</label>
+      <select id="room-select" value={selectedRoom} onChange={handleRoomChange}>
+        <option value="">Select a room</option>
+        {rooms.map((room) => (
+          <option key={room.id} value={room.id}>
+            {room.type} - {room.price}
+          </option>
+        ))}
+      </select>
+      {selectedRoom && <p>Selected Room ID: {selectedRoom}</p>}
+    </div>
           
           {/* Add payment method details */}
           <div className="payment-method-form">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './JoinUs.css'; 
 
-const JoinUs = () => {
+const JoinUs = ({ onRegistration }) => {
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [ssn, setSsn] = useState('');
@@ -32,14 +32,21 @@ const JoinUs = () => {
         throw new Error('Failed to register client');
       }
 
+
       //storing the ssn to use later
       sessionStorage.setItem('ssn', ssn);
       const ssnFromStorage = sessionStorage.getItem('ssn');
       sessionStorage.setItem('Client', true)
       console.log(ssnFromStorage);
 
-      // Optionally, handle success response here
       console.log('Client registered successfully');
+      window.alert('Registered successfully'); // Display alert message
+
+
+  // Call the onRegistration function passed from the parent component
+  if (typeof onRegistration === 'function') {
+    onRegistration();
+  }
     } catch (error) {
       console.error(fullName,address,ssn,email,password,registrationDate);
 
