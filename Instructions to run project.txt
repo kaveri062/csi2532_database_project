@@ -1,0 +1,17 @@
+Instructions to run project:
+
+1. Open 'usersystem' folder with intellij
+2. Open 'front-end' folder with visual studio code (usersystem\front-end)
+3. Create a database called database3 on pgadmin
+4. Run all the queries from the file 'database_queries.txt' in pgadmin on database3
+5. In IntelliJ, in the 'application.properties' change the password to your postgres password. 
+	(src/main/resources/application.properties)
+
+	for eg. spring.datasource.password = mypassword
+
+6. In IntelliJ, go to 'UsersystemApplication.java' and run the file using the play button there. 	(src/main/java/com/project/components/UsersystemApplication.java)  
+
+7. In VS code, run the following commands
+	npm i
+	npm run start
+8. Hopefully, you can see the project now.

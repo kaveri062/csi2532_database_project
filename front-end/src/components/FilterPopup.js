@@ -65,7 +65,8 @@ const FilterPopup = ({ onClose, filters, setFilters, applyFilters }) => {
                             <option key={index} value={rating}>{rating}</option>
                         ))}
                     </select>
-                </div>                {createCheckboxGroup('Rating', ratings, 'rating')}
+                </div>                
+                {createCheckboxGroup('Capacity', capacities, 'capacity')}
 
                 <div>
                     <h3>Price Range</h3>

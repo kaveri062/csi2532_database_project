@@ -5,19 +5,18 @@ const AddReservationForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
     roomsGuests: '',
     roomId:'',
-    checkindate: '',
-    checkoutdate: '',
     clientSsn: '',
     creditCardNumber: '',
     expiration: '',
     cvv: '',
   });
 
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [roomID, setRoomID] = useState('');
+
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -51,7 +50,14 @@ const AddReservationForm = ({ onClose }) => {
   const handleRoomChange = (e) => {
     const roomId = e.target.value;
     const selectedRoom = rooms.find(room => room.id === roomId);
-    setSelectedRoom(selectedRoom);  };
+    setSelectedRoom(selectedRoom || {}); // Set to an empty object if selectedRoom is undefined
+    setRoomID(roomId);
+  };
+
+  useEffect(() => {
+    console.log("room", roomID); // Log the updated roomID
+  }, [roomID]); // Run this effect when roomID changes
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -77,25 +83,26 @@ const AddReservationForm = ({ onClose }) => {
         },
         body: JSON.stringify(
           {
-            clientId: formData.ssn, // Assuming ssn is the client ID
+            clientId: formData.clientSsn, // Assuming ssn is the client ID
             employeeId: sessionStorage.getItem('ssn'),
-            roomId: selectedRoom.id, // Pass the roomId from the room
-            checkIn: formData.checkInDate,
-            checkOut: formData.checkOutDate,
+            roomId: parseInt(roomID, 10), // Pass the roomId from the room
+            checkIn: formData.checkIn,
+            checkOut: formData.checkOut,
             status: 'checkedIn', // Set default status
             paid: true // Set default paid status           
           }
         ),
       });
-    
-      console.log("hi", selectedRoom.id);
 
       if (!response.ok) {
         throw new Error('Failed to create reservation');
       }
 
+
       // Handle success, such as displaying a success message
       console.log('Reservation created successfully');
+      window.alert('Registered successfully'); // Display alert message
+
       onClose(); // Close the modal on success
     } catch (error) {
       setError(error.message);
@@ -129,8 +136,8 @@ const AddReservationForm = ({ onClose }) => {
             type="date"
             id="check-in"
             value={formData.checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
             className="input-field"
+            onChange={e => setFormData({ ...formData, checkIn: e.target.value })}
           />
         </div>
         <div className="input-group">
@@ -139,7 +146,7 @@ const AddReservationForm = ({ onClose }) => {
             type="date"
             id="check-out"
             value={formData.checkOut}
-            onChange={(e) => setCheckOut(e.target.value)}
+            onChange={e => setFormData({ ...formData, checkOut: e.target.value })}
             className="input-field"
           />
         </div>
@@ -147,16 +154,16 @@ const AddReservationForm = ({ onClose }) => {
 
         <div>
       <label htmlFor="room-select">Select a room:</label>
-      <select id="room-select" value={selectedRoom} onChange={handleRoomChange}>
+      <select id="room-select" value={selectedRoom.id} onChange={handleRoomChange}>
         <option value="">Select a room</option>
         {rooms.map((room) => (
           <option key={room.id} value={room.id}>
+            {room.id}
             {room.type} - {room.price}
           </option>
         ))}
       </select>
-      {selectedRoom && <p>Selected Room ID: {selectedRoom}</p>}
-    </div>
+   </div>
           
           {/* Add payment method details */}
           <div className="payment-method-form">
