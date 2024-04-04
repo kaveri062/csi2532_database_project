@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -47,6 +48,16 @@ public class ReservationImpl implements ReservationService {
 
     @Override
     public Reservation createReservation(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public Optional<Reservation> getReservationById(Integer reservationId) {
+        return reservationRepository.findById(reservationId);
+    }
+
+    @Override
+    public Reservation updateReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
 

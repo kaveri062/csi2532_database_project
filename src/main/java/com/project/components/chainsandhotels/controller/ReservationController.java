@@ -63,7 +63,7 @@ public class ReservationController {
         String clientId = request.getClientId();
         Optional<Client> clientOptional = clientService.getClientBySsn(clientId);
 
-        if (!clientOptional.isPresent()) {
+        if (!clientOptional.isPresent() || request.getRoomId()==null) {
             // Client does not exist
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -81,6 +81,25 @@ public class ReservationController {
         Reservation newReservation = reservationService.createReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(newReservation);
     }
+
+
+    @PostMapping("/checkInReservation")
+    public ResponseEntity<String> checkInReservation(@RequestBody Map<String, Integer> requestBody) {
+        // Check if the reservation exists
+        Integer reservationId= requestBody.get("reservation_id");
+        Optional<Reservation> reservationOptional = reservationService.getReservationById(reservationId);
+        if (!reservationOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reservation not found");
+        }
+
+        // Update the reservation status to "CheckedIn"
+        Reservation reservation = reservationOptional.get();
+        reservation.setStatus("CheckedIn");
+        reservationService.updateReservation(reservation);
+
+        return ResponseEntity.ok("Reservation checked in successfully");
+    }
+
 
     public static class ClientReservationRequest {
 
