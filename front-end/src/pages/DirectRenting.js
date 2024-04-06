@@ -19,6 +19,10 @@ const DirectRenting = () => {
     }
   }, [clientSsn]);
 
+  useEffect(() => {
+    fetchBookingData();
+  }, []); // Fetch booking data on initial render
+
   const fetchBookingData = async () => {
     try {
       const response = await fetch('http://localhost:8080/reservations/clientReservations', {
@@ -69,49 +73,29 @@ const DirectRenting = () => {
   };
 
   const handleCheckIn = async (reservationId) => {
-    console.log('Check-in clicked for reservation ID:', reservationId);
-    const bookingToUpdate = booking.find(item => item.id === reservationId);
+    try {
+      const response = await fetch('http://localhost:8080/reservations/checkInReservation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reservation_id: reservationId,
+        }),
+      });
 
-    if (bookingToUpdate) {
-      try {
-        if (!bookingToUpdate.status || bookingToUpdate.status.trim() === '') {
-          // If status is empty or null, update it to 'checkedIn'
-          const updatedBooking = booking.map(item =>
-            item.id === reservationId ? { ...item, status: 'checkedIn' } : item
-          );
-          setBooking(updatedBooking);
-        } else if (bookingToUpdate.status !== 'checkedIn') {
-          // Otherwise, send a check-in request to the API
-          const response = await fetch(`http://localhost:8080/reservations/checkInReservation/${reservationId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              // Additional data for check-in if needed
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to check in client');
-          }
-
-          // Update the status in the local state
-          const updatedBooking = booking.map(item =>
-            item.id === reservationId ? { ...item, status: 'checkedIn' } : item
-          );
-          setBooking(updatedBooking);
-
-          // Handle success, such as displaying a success message
-          console.log('Client checked in successfully');
-          // Perform any necessary UI updates or state changes
-        }
-      } catch (error) {
-        console.error('Check-in error:', error.message);
-        // Handle error state or display an error message
+      if (!response.ok) {
+        throw new Error('Failed to check in');
       }
-    } else {
-      console.log('Booking not found.');
+
+      const updatedBooking = booking.map(item =>
+        item.id === reservationId ? { ...item, status: 'checkedIn' } : item
+      );
+      setBooking(updatedBooking);
+      console.log('Check-in successful');
+      console.log('Updated booking:', updatedBooking);
+    } catch (error) {
+      console.error('Check-in error:', error.message);
     }
   };
 
@@ -160,9 +144,7 @@ const DirectRenting = () => {
           <p>Paid: {bookingItem.paid ? 'Yes' : 'No'}</p>
           <button onClick={handleSaveChanges} className="save-btn">Save</button>
           <button onClick={handleDeleteBooking} className="delete-btn">Delete</button>
-          <button onClick={() => handleCheckIn(bookingItem.id)} className="check-in-btn">
-            Check-In
-          </button>
+          <button onClick={() => handleCheckIn(bookingItem.id)} className="check-in-btn">Check-In</button>
           <div className="payment-method-form">
             {/* Payment method details inputs */}
           </div>
