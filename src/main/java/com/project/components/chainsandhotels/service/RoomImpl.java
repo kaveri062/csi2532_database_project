@@ -35,4 +35,11 @@ public class RoomImpl implements  RoomService{
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public List<Room> getRoomsByHotelId(Integer hotelId) {
+        return roomRepository.findByHotelId(hotelId);
+    }
+
+
 }

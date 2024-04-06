@@ -9,4 +9,5 @@ public interface RoomService {
 
     List<Room> findRoomsByCriteria(String chainName,String location, int capacity, double minPrice, double maxPrice, int rating);
     public List<Room> getRoomsByEmployeeSsn(String employeeId);
+    List<Room> getRoomsByHotelId(Integer hotelId);
 }

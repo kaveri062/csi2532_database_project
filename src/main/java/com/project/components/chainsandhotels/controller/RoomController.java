@@ -1,10 +1,12 @@
 package com.project.components.chainsandhotels.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.components.chainsandhotels.model.Hotel;
 import com.project.components.chainsandhotels.model.Reservation;
 import com.project.components.chainsandhotels.model.Room;
 import com.project.components.chainsandhotels.model.RoomDTO;
 import com.project.components.chainsandhotels.service.EmployeeService;
+import com.project.components.chainsandhotels.service.HotelService;
 import com.project.components.chainsandhotels.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private HotelService hotelService;
 
     @Autowired
     private EmployeeService employeeService;
@@ -83,6 +88,27 @@ public class RoomController {
         dto.setExtendable(room.isExtendable());
         dto.setIssues(room.getIssues());
         return dto;
+    }
+
+    @PostMapping("/roomsByHotel")
+    public ResponseEntity<Map<String, Object>> getRoomsByHotelId(@RequestBody Map<String, Integer> requestBody) {
+        Integer hotelId = requestBody.get("hotelId");
+
+        Hotel hotel = hotelService.getHotelById(hotelId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("hotelId", hotel.getHotelId());
+        response.put("hotelName", hotel.getName());
+        response.put("hotelAddress", hotel.getAddress());
+
+        List<Room> rooms = roomService.getRoomsByHotelId(hotelId);
+        List<RoomDTO> roomDTOs = rooms.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        response.put("rooms", roomDTOs);
+
+        return ResponseEntity.ok(response);
     }
 
 

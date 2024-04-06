@@ -45,8 +45,18 @@ public class HotelChainController {
             chainData.put("chainNumberOfHotels", hotelChain.getNumberOfHotels());
 
             List<Hotel> hotels = hotelService.findByAllHotelNamesHotelChain(hotelChain);
-            List<String> hotelNames = hotels.stream().map(Hotel::getName).collect(Collectors.toList());
-            chainData.put("hotels", hotelNames);
+            List<Map<String, Object>> hotelList = new ArrayList<>();
+            for (Hotel hotel : hotels) {
+                Map<String, Object> hotelData = new LinkedHashMap<>();
+                hotelData.put("hotelId", hotel.getHotelId());
+                hotelData.put("hotelName", hotel.getName());
+
+                hotelList.add(hotelData);
+            }
+
+            chainData.put("hotels", hotelList);
+//            List<String> hotelNames = hotels.stream().map(Hotel::getName, ).collect(Collectors.toList());
+//            chainData.put("hotels", hotelNames);
 
             result.put(hotelChain.getChainName(), Collections.singletonList(chainData));
         }
