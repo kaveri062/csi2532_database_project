@@ -1,63 +1,112 @@
 /* HotelInfo.css */
-.hotel-info-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .hotel-images {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .image-placeholder {
-    width: 100%;
-    height: 200px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .hotel-rating {
-    color: gold;
-    margin-bottom: 10px;
-  }
-  
-  .hotel-description {
-    margin-bottom: 20px;
-  }
-  
-  .hotel-amenities ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .hotel-amenities li {
-    background: lightgrey;
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 5px;
-  }
-  
-  .hotel-map {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  .reserve-room-btn {
-    background-color: #0066cc;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-results-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.back-to-results-link:hover {
+  text-decoration: underline;
+}
+
+.hotel-details {
+  margin-bottom: 20px;
+}
+
+.hotel-name {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.hotel-address {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.room-list {
+  list-style: none;
+  padding: 0;
+}
+
+.room-item {
+  margin-bottom: 30px;
+}
+
+.room-price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.room-type {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.room-amenities {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.room-capacity {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.issues {
+  color: #dc3545;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.book-now-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-now-button:hover {
+  background-color: #218838;
+}
+.room-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.room-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}

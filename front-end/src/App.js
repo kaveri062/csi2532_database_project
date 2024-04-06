@@ -28,9 +28,11 @@ function AppRoutes() {
           <Route path="/join-us" element={<JoinUs />} />
           <Route path="/find-reserve" element={<FindReserve />} />
           <Route path="/about-us" element={<AboutUs />} />
+          {/* Adjusted Route for HotelInfo to use hotelId */}
+          <Route path="/hotel-info/:hotelId" element={<HotelInfo />} />
         </>
       )}
-      <Route path="/hotels/:hotelName" element={<HotelInfo />} />
+      {/* Removed the previous hotelName route and replaced with hotelId */}
       {/* Add other routes here as needed */}
     </Routes>
   );

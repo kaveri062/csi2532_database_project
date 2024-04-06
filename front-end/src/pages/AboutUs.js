@@ -15,13 +15,12 @@ const AboutUs = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-
-        // No need for additional transformation if the API's structure matches our expectations
-        const chainsArray = Object.entries(data).map(([chainName, details]) => {
-          return {
-            ...details[0], // Directly spread the first (and only) item in the array
-          };
-        });
+        // Now we expect the API to return an object where each key is a chain name
+        // and the value is an array with chain details
+        const chainsArray = Object.entries(data).map(([chainName, chainDetails]) => ({
+          chainName,
+          ...chainDetails[0], // We take the first (and assuming only) item from the details array
+        }));
 
         setHotelChains(chainsArray);
       } catch (err) {
@@ -50,10 +49,10 @@ const AboutUs = () => {
             <div className="hotels-list">
               <h3>Hotels:</h3>
               <ul>
-                {chain.hotels.map((hotel, hotelIndex) => (
-                  <li key={hotelIndex}>
-                    {/* Update the link as necessary. If each hotel has a unique ID, use that instead */}
-                    <Link to={`/hotels/${encodeURIComponent(hotel)}`}>{hotel}</Link>
+                {chain.hotels.map(hotel => (
+                  <li key={hotel.hotelId}>
+                    {/* Link to the HotelInfo page using hotelId */}
+                    <Link to={`/hotel-info/${hotel.hotelId}`}>{hotel.hotelName}</Link>
                   </li>
                 ))}
               </ul>

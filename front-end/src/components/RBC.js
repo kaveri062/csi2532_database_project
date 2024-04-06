@@ -12,7 +12,7 @@ const RBC = ({ room, onClose }) => {
         email: '',
         checkInDate: '',
         checkOutDate: '',
-        roomType: 'Suite',
+        roomType: room?.type || 'Suite', // Default to 'Suite' or use room type if available
     });
 
     const handleInputChange = (event) => {
@@ -29,6 +29,18 @@ const RBC = ({ room, onClose }) => {
     if (!room) {
         return <div>Loading room details...</div>;
     }
+
+    // Displaying room details safely
+    const renderRoomDetails = () => (
+        <div className="room-details">
+            <h3>Room Details</h3>
+            <p>Type: {room.type}</p>
+            <p>Price: ${room.price}</p>
+            <p>Capacity: {room.capacity}</p>
+            <p>Amenities: {room.amenities}</p>
+            {room.issues && <p>Issues: {room.issues}</p>}
+        </div>
+    );
 
     return (
         <div className="room-booking-popup-overlay">
@@ -113,20 +125,7 @@ const RBC = ({ room, onClose }) => {
                             required
                         />
                     </div>
-                    <div className="form-field">
-                        <label htmlFor="roomType">Room Type:</label>
-                        <select
-                            id="roomType"
-                            name="roomType"
-                            value={bookingDetails.roomType}
-                            onChange={handleInputChange}
-                            required
-                        >
-                            <option value="Suite">Suite</option>
-                            <option value="Deluxe">Deluxe</option>
-                            <option value="Standard">Standard</option>
-                        </select>
-                    </div>
+                   
                     <button type="submit" className="submit-booking-btn">Submit Reservation</button>
                 </form>
             </div>
